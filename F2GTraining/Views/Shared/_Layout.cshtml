@@ -6,6 +6,7 @@
     <title>FUT TRAINING F2G</title>
     <link rel="stylesheet" href="~/css/baseaplicacion.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/F2GTraining.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("CSSLinks", required: false)
 </head>
 <body>
 
@@ -14,19 +15,11 @@
             <div class="name-app">
                 <p>FUT TRAINING F2G</p>
             </div>
-            @*<div class="login-section">
-                <a asp-controller="Usuarios" asp-action="InicioSesion">Iniciar sesión</a>
-            </div>*@
-            @*<div class="login-section">
-                <a asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
-            </div>*@
-            @*<div class="login-section">
-                <a asp-controller="Usuarios" asp-action="InicioSesion">Volver a login</a>
-            </div>*@
-            <div class="user-section">
+            @await RenderSectionAsync("ZonaLogueo", required: false)
+            @*<div class="user-section">
                 <p>NOMBRE DE USUARIO</p>
                 <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
-            </div>
+            </div>*@
         </div>
     </header>
 

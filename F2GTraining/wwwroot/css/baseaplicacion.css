@@ -103,6 +103,7 @@
     
     .header-pagina {
         display: block;
+        padding-bottom:20px;
     }
 
     .header-pagina .name-app {
@@ -113,12 +114,6 @@
     }
 
     .header-pagina .login-section {
-        width: 100%;
-        margin-left: 0%;
-        margin-top: 25px;
-    }
-
-    .header-pagina .user-section {
         width: 100%;
         margin-left: 0%;
         margin-top: 25px;

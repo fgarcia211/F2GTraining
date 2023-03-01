@@ -1,0 +1,41 @@
+﻿@section CSSLinks{
+    <link rel="stylesheet" href="~/css/registrousuario.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo {
+    <div class="login-section">
+        <a asp-controller="Usuarios" asp-action="InicioSesion">Volver a login</a>
+    </div>
+}
+
+<div class="advice-register">
+    <p>Para continuar, rellena los campos que se solicitan a continuacion</p>
+</div>
+
+<form method="post">
+    <div class="double-input">
+        <div class="input-zone">
+            <label>NOMBRE DE USUARIO</label>
+            <input type="text" name="usuario" />
+        </div>
+        <div class="input-zone">
+            <label>TELÉFONO</label>
+            <input type="number" name="telefono" />
+        </div>
+    </div>
+    <div class="double-input">
+        <div class="input-zone">
+            <label>CORREO ELECTRONICO</label>
+            <input type="email" name="correo" />
+        </div>
+        <div class="input-zone">
+            <label>CONTRASEÑA</label>
+            <input type="password" name="contrasenha" />
+        </div>
+    </div>
+    <div class="check-zone">
+        <p>ERROR: EL CORREO INTRODUCIDO NO ES CORRECTO</p>
+        <button>Registrarse</button>
+    </div>
+    
+</form>
