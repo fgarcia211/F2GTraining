@@ -76,6 +76,20 @@
     font-size: 15px;
 }
 
+.login-form form p {
+    margin-bottom: 20px;
+}
+
+.login-form form p.error-viewdata {
+    color: red;
+    font-weight:bold;
+}
+
+.login-form form p.message-tempdata {
+    color: greenyellow;
+    font-weight:bold;
+}
+
 @media (max-width: 1175px) {
 
     .login-app-container img {
@@ -111,7 +125,7 @@
     }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 710px) {
 
     .title-login img {
         width: 70%;
@@ -141,14 +155,21 @@
     }
 
     .contenedor-pagina {
-        height: 950px;
+        height: 1050px;
     }
     
 }
 
-@media (max-width: 420px) {
+@media (max-width: 590px) {
 
     .contenedor-pagina {
-        height: 900px;
+        height: 980px;
+    }
+}
+
+@media (max-width: 410px) {
+
+    .contenedor-pagina {
+        height: 910px;
     }
 }

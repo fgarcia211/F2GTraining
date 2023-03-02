@@ -17,12 +17,20 @@
         <form method="post">
             <div class="input-zone">
                 <label>NOMBRE DE USUARIO</label>
-                <input type="text" name="usuario" />
+                <input type="text" name="usuario" required/>
             </div>
             <div class="input-zone">
                 <label>CONTRASEÑA</label>
-                <input type="password" name="contrasenha" />
+                <input type="password" name="contrasenha" required/>
             </div>
+            @if (TempData["MENSAJE"] != null)
+            {
+            <p class="message-tempdata">@TempData["MENSAJE"]</p>
+            }
+            @if (ViewData["ERROR"] != null)
+            {
+            <p class="error-viewdata">@ViewData["ERROR"]</p>
+            }
             <button>Iniciar Sesion</button>
         </form>
     </div>
