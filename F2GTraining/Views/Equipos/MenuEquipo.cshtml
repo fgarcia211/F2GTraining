@@ -1,0 +1,67 @@
+﻿@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+
+    string controllerNewTeam = "Equipos";
+    string actionNewTeam = "CrearEquipo";
+
+
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/menuequipo.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@user.Nombre</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+<div class="teamview-menu">
+
+    <div class="team-section">
+        @*<p>Selección de equipo</p>
+        <select>
+            <option>Equipo1</option>
+            <option>Equipo2</option>
+            <option>Equipo3</option>
+        </select>
+        <div class="image-team">
+            <img src="~/images/logoapp.png" />
+        </div>
+        <div class="link-team-actions">
+            <a class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
+            <a class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
+            <a class="minibutton-teamview">NUEVO EQUIPO</a>
+        </div>*@
+        <div class="newteam-container">
+            <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
+            <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>  
+            <button class="" onclick="location.href='@Url.Action(controllerNewTeam, actionNewTeam)'">NUEVO EQUIPO</button>
+        </div>
+    </div>
+
+    @*<div class="player-section">
+        <div class="border-section"></div>
+        <div class="player-goalkeeper">
+            <div class="title-position">PORTEROS</div>
+            <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
+        </div>
+        <div class="player-defense">
+            <div class="title-position">DEFENSAS</div>
+            <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
+        </div>
+        <div class="player-midfield">
+            <div class="title-position">MEDIOCENTROS</div>
+            <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
+        </div>
+        <div class="player-striker">
+            <div class="title-position">DELANTEROS</div>
+            <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
+        </div>
+        <div class="border-section"></div>
+    </div>*@
+
+</div>
+

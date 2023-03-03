@@ -1,0 +1,97 @@
+﻿.teamview-menu {
+    display: flex;
+    padding: 20px 0px 20px 0px;
+}
+
+.teamview-menu .team-section {
+    width: 30%;
+    text-align: center;
+    margin-left: 5%;
+}
+
+.teamview-menu .team-section:has(.newteam-container) {
+    width: 100%;
+    text-align: center;
+    margin-left: 0%;
+}
+
+.newteam-container .info-newteam{
+    margin: 40px 0px 40px 0px;
+    font-size: 26px;
+}
+
+.newteam-container button {
+    border: none;
+    border-radius: 100px;
+    padding: 20px;
+    width: 30%;
+    background-color: lightgreen;
+    font-weight: bold;
+    margin-top: 150px;
+    font-size: 26px;
+}
+
+.team-section p {
+    font-size:28px;
+    letter-spacing: 1px;
+}
+
+.team-section select {
+    margin-top:15px;
+    width: 75%;
+    padding: 10px;
+    border: none;
+    border-radius: 100px;
+    appearance: none;
+    text-align: center;
+    margin-bottom: 15px
+}
+
+.team-section div.image-team img {
+    width: 70%;
+}
+
+.team-section div.link-team-actions {
+    width: 96%;
+    padding: 0px 2% 0px 2%;
+    display: grid;
+}
+
+.team-section div.link-team-actions a.minibutton-teamview {
+    background-color: #53B12D;
+    width: 78%;
+    margin-top: 10px;
+    margin-left: 10%;
+    text-decoration: none;
+    padding: 10px 2% 10px 2%;
+    border-radius: 100px;
+}
+
+@media (max-width: 1470px) {
+
+    .contenedor-pagina {
+        height: 580px;
+    }
+}
+
+@media (max-width: 1210px) {
+
+    .contenedor-pagina {
+        height: 520px;
+    }
+}
+
+@media (max-width: 1015px){
+    .teamview-menu .team-section {
+        width: 40%;
+        text-align: center;
+    }
+
+    .team-section div.image-team img {
+        width: 65%;
+    }
+}
+
+@media (max-width: 895px) {
+    
+}

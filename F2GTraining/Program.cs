@@ -5,8 +5,15 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-string connectionString = builder.Configuration.GetConnectionString("databaseF2G");
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(12);
+});
+
+string connectionString = builder.Configuration.GetConnectionString("databaseF2GClase");
 builder.Services.AddTransient<RepositoryUsuarios>();
+builder.Services.AddTransient<RepositoryEquipos>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
@@ -19,6 +26,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

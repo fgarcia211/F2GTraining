@@ -1,4 +1,5 @@
-﻿using F2GTraining.Models;
+﻿using F2GTraining.Extensions;
+using F2GTraining.Models;
 using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,11 @@ namespace F2GTraining.Controllers
 
         public IActionResult InicioSesion()
         {
+            if (HttpContext.Session.GetObject<Usuario>("USUARIO") != null)
+            {
+                return RedirectToAction("MenuEquipo","Equipos");
+            }
+
             return View();
         }
 
@@ -26,6 +32,7 @@ namespace F2GTraining.Controllers
             if (user != null)
             {
                 //guardar en sesion el usuario
+                HttpContext.Session.SetObject("USUARIO", user);
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else
@@ -37,6 +44,11 @@ namespace F2GTraining.Controllers
 
         public IActionResult RegistroUsuario()
         {
+            if (HttpContext.Session.GetObject<Usuario>("USUARIO") != null)
+            {
+                return RedirectToAction("MenuEquipo", "Equipos");
+            }
+
             return View();
         }
 
@@ -78,6 +90,7 @@ namespace F2GTraining.Controllers
 
         public IActionResult CerrarSesion()
         {
+            HttpContext.Session.Remove("USUARIO");
             return RedirectToAction("InicioSesion");
         }
 

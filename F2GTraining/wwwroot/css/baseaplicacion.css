@@ -94,16 +94,29 @@
 .contenedor-pagina {
     background: linear-gradient(180deg, #767676 8.58%, #406C34 18.57%, #23351E 58.77%, #212B1F 87.03%);
     color: white;
-    height: 560px;
+    height: 610px;
     padding: 20px 5% 20px 5%;
 }
 /*FIN CSS CONTENEDOR PAGINA*/
+@media (max-width: 1470px){
+
+    .contenedor-pagina {
+        height: 530px;
+    }
+
+}
 
 @media (max-width: 710px) {
     
     .header-pagina {
         display: block;
         padding-bottom:20px;
+    }
+
+    .header-pagina .user-section {
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 0%;
     }
 
     .header-pagina .name-app {

@@ -75,6 +75,13 @@ form .check-zone {
 
 }
 
+@media (max-width: 570px) {
+
+    .contenedor-pagina {
+        height: 900px;
+    }
+}
+
 @media (max-width: 400px) {
 
     .advice-register {
