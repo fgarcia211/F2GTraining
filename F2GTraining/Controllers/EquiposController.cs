@@ -27,5 +27,10 @@ namespace F2GTraining.Controllers
 
             return View();
         }
+
+        public IActionResult CrearEquipo()
+        {
+            return View();
+        }
     }
 }

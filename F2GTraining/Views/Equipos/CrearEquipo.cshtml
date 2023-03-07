@@ -1,0 +1,36 @@
+﻿@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+
+    string controllerNewTeam = "Equipos";
+    string actionNewTeam = "CrearEquipo";
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/registroequipo.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo {
+    <div class="login-section">
+        <div class="user-section">
+            <p>@user.Nombre</p>
+            <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+        </div>
+    </div>
+}
+
+<form method="post">
+    <div class="form-new-team">
+        <div class="input-zone">
+            <label>NOMBRE DE EQUIPO</label>
+            <input type="text" name="nombre" required/>
+        </div>
+        <div class="input-zone">
+            <label>ENLACE DE IMAGEN</label>
+            <input type="text" name="imagen" required/>
+        </div>
+        <div class="check-zone">
+            <p>@ViewData["ERROR"]</p>
+            <button>Registrarse</button>
+        </div> 
+    </div>
+</form>
