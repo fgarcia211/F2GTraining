@@ -1,4 +1,5 @@
 using F2GTraining.Data;
+using F2GTraining.Helpers;
 using F2GTraining.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,9 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromHours(12);
 });
 
-string connectionString = builder.Configuration.GetConnectionString("databaseF2GClase");
+string connectionString = builder.Configuration.GetConnectionString("databaseF2G");
+builder.Services.AddSingleton<HelperRutasProvider>();
+builder.Services.AddSingleton<HelperSubirFicheros>();
 builder.Services.AddTransient<RepositoryUsuarios>();
 builder.Services.AddTransient<RepositoryEquipos>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));

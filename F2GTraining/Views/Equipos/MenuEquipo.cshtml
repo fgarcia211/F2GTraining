@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Equipo>
+
+@{
     Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
 
     string controllerNewTeam = "Equipos";
@@ -23,52 +25,61 @@
 <div class="teamview-menu">
 
     <div class="team-section">
-        @*<p>Selección de equipo</p>
-        <select>
-            <option>Equipo1</option>
-        </select>
-        <div class="image-team">
-            <img src="~/images/logoapp.png" />
-        </div>
-        <div class="link-team-actions">
-            <a class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
-            <a class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
-            <a class="minibutton-teamview">NUEVO EQUIPO</a>
-        </div>*@
-        <div class="newteam-container">
-            <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
-            <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>  
-            <button class="" onclick="location.href='@Url.Action(actionNewTeam, controllerNewTeam, new {})'">NUEVO EQUIPO</button>
-        </div>
+        @if (Model != null)
+        {
+            <p>Selección de equipo</p>
+            <select>
+                <option>Equipo1</option>
+            </select>
+            <div class="image-team">
+                <img src="~/images/logoapp.png" />
+            </div>
+            <div class="link-team-actions">
+                <a class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
+                <a class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
+                <a class="minibutton-teamview">NUEVO EQUIPO</a>
+            </div>
+        }
+        else
+        {
+            <div class="newteam-container">
+                <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
+                <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>  
+                <button class="" onclick="location.href='@Url.Action(actionNewTeam, controllerNewTeam, new {})'">NUEVO EQUIPO</button>
+            </div>   
+        }
     </div>
 
-    @*<div class="player-section">
-        <div class="border-section"></div>
-        <div class="player-zone">
-            <div class="player-goalkeeper">
-                <div class="title-position">PORTEROS</div>
-                <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
-                <div class="player" id="player1" onclick="muestraOpcionesJug(1)">Juanito Garcia Higuita</div>
-                <div class="options-player" id="optplayer1" style="display: none">
-                    <button>VER GRAFICA</button>
-                    <button>ELIMINAR JUGADOR</button>
+    @if (Model != null)
+    {
+        <div class="player-section">
+            <div class="border-section"></div>
+            <div class="player-zone">
+                <div class="player-goalkeeper">
+                    <div class="title-position">PORTEROS</div>
+                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
+                    <div class="player" id="player1" onclick="muestraOpcionesJug(1)">Juanito Garcia Higuita</div>
+                    <div class="options-player" id="optplayer1" style="display: none">
+                        <button>VER GRAFICA</button>
+                        <button>ELIMINAR JUGADOR</button>
+                    </div>
+                </div>
+                <div class="player-defense">
+                    <div class="title-position">DEFENSAS</div>
+                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DEFENSAS-->
+                </div>
+                <div class="player-midfield">
+                    <div class="title-position">MEDIOCENTROS</div>
+                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN MEDIOCENTROS-->
+                </div>
+                <div class="player-striker">
+                    <div class="title-position">DELANTEROS</div>
+                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DELANTEROS-->
                 </div>
             </div>
-            <div class="player-defense">
-                <div class="title-position">DEFENSAS</div>
-                <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DEFENSAS-->
-            </div>
-            <div class="player-midfield">
-                <div class="title-position">MEDIOCENTROS</div>
-                <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN MEDIOCENTROS-->
-            </div>
-            <div class="player-striker">
-                <div class="title-position">DELANTEROS</div>
-                <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DELANTEROS-->
-            </div>
+            <div class="border-section"></div>
         </div>
-        <div class="border-section"></div>
-    </div>*@
+    }
 
 </div>
 
