@@ -32,7 +32,7 @@ form .form-new-team .input-zone label:has(input) {
     font-size: 28px;
     text-align:center;
     cursor: pointer;
-    transition:color linear 0.2s;
+    transition:background-color linear 0.2s;
     background-color: white;
     padding:10px 5% 10px 5%;
     color: green;
@@ -41,6 +41,7 @@ form .form-new-team .input-zone label:has(input) {
 
 form .form-new-team .input-zone label:has(input):hover {
     color: black;
+    background-color: #D6F8C8;
     border: 1px solid black;
 }
 

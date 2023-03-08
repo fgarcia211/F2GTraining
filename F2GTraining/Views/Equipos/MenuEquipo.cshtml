@@ -20,6 +20,13 @@
 
 @section Scripts{
     <script src="~/js/menuequipo.js"></script>
+    <script>
+        $(function() {
+            muestraOpcionesJug(1);
+            esconderEquipos();
+        });
+    </script>
+    
 }
 
 <div class="teamview-menu">
@@ -27,24 +34,35 @@
     <div class="team-section">
         @if (Model != null)
         {
+            //Cambiar valor de equipo (TODO EL EQUIPO) - OPCIONAL
+            <input type="hidden" id="equiposeleccionado" value="@Model[0].IdEquipo"/>
             <p>Selección de equipo</p>
-            <select>
-                <option>Equipo1</option>
+            <select id="selectorequipo" onchange="esconderEquipos()">
+                @foreach (Equipo equipo in Model)
+                {
+                    <option value="@equipo.IdEquipo">@equipo.Nombre</option>
+                }
             </select>
-            <div class="image-team">
-                <img src="~/images/logoapp.png" />
-            </div>
-            <div class="link-team-actions">
-                <a class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
-                <a class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
-                <a class="minibutton-teamview">NUEVO EQUIPO</a>
-            </div>
+
+            //Comprobar equipo seleccionado en jquery y cambiar contenido de dentro
+            @foreach (Equipo equipo in Model)
+            {
+                <div class="image-team" id="teamimage-@equipo.IdEquipo">
+                    <img src="@equipo.Imagen.Replace("~",string.Empty)" />
+                </div>
+                <div class="link-team-actions" id="teamaction-@equipo.IdEquipo">
+                    <a class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
+                    <a class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
+                    <a asp-controller="Equipos" asp-action="CrearEquipo" class="minibutton-teamview">NUEVO EQUIPO</a>
+                </div>
+            }
+            
         }
         else
         {
             <div class="newteam-container">
                 <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
-                <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>  
+                <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>
                 <button class="" onclick="location.href='@Url.Action(actionNewTeam, controllerNewTeam, new {})'">NUEVO EQUIPO</button>
             </div>   
         }

@@ -18,11 +18,11 @@
 
 .newteam-container .info-newteam{
     margin: 40px 0px 40px 0px;
-    font-size: 26px;
+    font-size: 36px;
 }
 
 .newteam-container button {
-    border: none;
+    border: 1px solid black;
     border-radius: 100px;
     padding: 20px;
     width: 30%;
@@ -30,6 +30,13 @@
     font-weight: bold;
     margin-top: 150px;
     font-size: 26px;
+    cursor: pointer;
+    transition: background-color linear 0.2s;
+}
+
+.newteam-container button:hover {
+    color: white;
+    background-color: green;
 }
 
 .team-section p {
@@ -67,6 +74,9 @@
     text-decoration: none;
     padding: 10px 2% 10px 2%;
     border-radius: 100px;
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
 }
 
 .teamview-menu .player-section {
@@ -136,6 +146,10 @@
     background-color: #53B12D;
 }
 
+.contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+    height: 630px;
+}
+
 @media (max-width: 1630px){
 
     .teamview-menu .player-section {
@@ -149,6 +163,10 @@
     .teamview-menu .player-section .player-zone {
         height: 440px;
     }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 600px;
+    }
 }
 
 @media (max-width: 1470px) {
@@ -161,13 +179,14 @@
         height: 490px;
     }
 
-    .contenedor-pagina {
-        height: 580px;
-    }
-
     .teamview-menu .player-section .player-zone {
         height: 410px;
     }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 570px;
+    }
+    
 }
 
 @media (max-width: 1210px) {
@@ -189,7 +208,15 @@
     }
 
     .newteam-container button {
-        margin-top: 100px;
+        margin-top: 50px;
+    }
+
+    .newteam-container .info-newteam {
+        font-size: 30px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 530px;
     }
 }
 
@@ -209,6 +236,10 @@
     .team-section div.image-team img {
         height: 170px;
         width: 80%;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 500px;
     }
 
     .teamview-menu .player-section .player-zone {
@@ -283,6 +314,10 @@
 
     .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
         height: 1400px;
+    }
+
+    .newteam-container .info-newteam {
+        font-size: 27px;
     }
 }
 
