@@ -77,6 +77,11 @@
     cursor: pointer;
     border: 1px solid white;
     color: white;
+    transition: background-color linear 0.2s;
+}
+
+.team-section div.link-team-actions a.minibutton-teamview:hover {
+    background-color: green;
 }
 
 .teamview-menu .player-section {

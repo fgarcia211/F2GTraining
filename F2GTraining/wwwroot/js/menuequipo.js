@@ -1,6 +1,6 @@
 ﻿function esconderEquipos() {
 
-    var equipoSelecc = $("#equiposeleccionado").val()
+    var equipoSelecc = $("#selectorequipo").val()
 
     var divisoresImagen = $(".image-team");
 
@@ -8,7 +8,7 @@
         $(divisoresImagen[i]).hide()
     }
 
-    var divisoresEquipo = $("link-team-actions");
+    var divisoresEquipo = $(".link-team-actions");
 
     for (var i = 0; i < divisoresEquipo.length; i++) {
         $(divisoresEquipo[i]).hide()
