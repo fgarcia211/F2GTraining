@@ -8,12 +8,14 @@ namespace F2GTraining.Controllers
 {
     public class EquiposController : Controller
     {
-        private RepositoryEquipos repo;
+        private RepositoryEquipos repoEqu;
+        private RepositoryJugadores repoJug;
         private HelperSubirFicheros helperArchivos;
 
-        public EquiposController(RepositoryEquipos repo, HelperSubirFicheros helperPath)
+        public EquiposController(RepositoryEquipos repo, RepositoryJugadores repo2, HelperSubirFicheros helperPath)
         {
-            this.repo = repo;
+            this.repoEqu = repo;
+            this.repoJug = repo2;
             this.helperArchivos = helperPath;
         }
 
@@ -26,7 +28,7 @@ namespace F2GTraining.Controllers
                 return RedirectToAction("InicioSesion", "Usuarios");
             }
 
-            List<Equipo> equipos = this.repo.GetEquiposUser(user.IdUsuario);
+            List<Equipo> equipos = this.repoEqu.GetEquiposUser(user.IdUsuario);
 
             if (equipos.Count == 0)
             {
@@ -34,6 +36,17 @@ namespace F2GTraining.Controllers
             }
             else
             {
+                List<Jugador> jugadoresUsuario = new List<Jugador>();
+
+                foreach (Equipo equipo in equipos)
+                {
+                    foreach (Jugador jugador in this.repoJug.GetJugadoresEquipo(equipo.IdEquipo))
+                    {
+                        jugadoresUsuario.Add(jugador);
+                    }
+                }
+
+                ViewData["JUGADORESUSUARIO"] = jugadoresUsuario;
                 return View(equipos);
             }
 
@@ -67,7 +80,7 @@ namespace F2GTraining.Controllers
             if (extension == ".png")
             {
                 string path = await this.helperArchivos.UploadFileAsync(imagen, nombre.ToLower());
-                await this.repo.InsertEquipo(user.IdUsuario, nombre, path);
+                await this.repoEqu.InsertEquipo(user.IdUsuario, nombre, path);
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else

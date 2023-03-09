@@ -36,14 +36,14 @@ namespace F2GTraining.Controllers
                 {
                     ViewData["IDEQUIPO"] = equipo.IdEquipo;
                     ViewData["NOMBRE"] = equipo.Nombre;
-                    return View();
+                    return View(this.repoJug.GetPosiciones());
                 }
             }
             
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, decimal peso, float altura)
+        public async Task<IActionResult> CrearJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, int peso, int altura)
         {
             Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
 
@@ -55,16 +55,12 @@ namespace F2GTraining.Controllers
             {
                 Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-                if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+                if (equipo != null || equipo.IdUsuario == user.IdUsuario)
                 {
-                    return RedirectToAction("MenuEquipo", "Equipos");
+                    await this.repoJug.InsertJugador(idequipo, idposicion, nombre, dorsal, edad, peso, altura);
                 }
-                else
-                {
-                    /*await this.repoJug.InsertJugador(idequipo, idposicion, nombre, dorsal, edad, peso, altura);*/
-                    return View();
 
-                }
+                return RedirectToAction("MenuEquipo", "Equipos");
             }
 
         }

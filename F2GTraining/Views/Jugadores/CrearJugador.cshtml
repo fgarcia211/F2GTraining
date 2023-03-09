@@ -1,5 +1,22 @@
-﻿<div class="show-team">
-    <p>Nuevo jugador - Equipo: @ViewData["MENSAJE"]</p>
+﻿@model List<Posicion>
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/crearjugador.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@user.Nombre</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+<div class="show-team">
+    <p>Nuevo jugador - Equipo: @ViewData["NOMBRE"]</p>
 </div>
 
 <div class="form-register-zone">
@@ -7,33 +24,34 @@
     <div class="inputs-required-zone">
         <div class="input-required">
             <label>POSICION</label>
-            <select name="idposicion">
-                <option value="1">Portero</option>
-                <option value="2">Defensa</option>
+            <select name="idposicion" required>
+                @foreach (Posicion pos in Model){
+                    <option value="@pos.IdPosicion">@pos.Nombre</option>
+                }
             </select>
         </div>
         <div class="input-required">
             <label>NOMBRE</label>
-            <input type="text" name="nombre"/>
+            <input type="text" name="nombre" required/>
         </div>
     </div>
 
     <div class="inputs-optional-zone">
         <div class="input-optional">
             <label>DORSAL</label>
-            <input type="number" name="dorsal"/>
+            <input type="number" name="dorsal" min="1" max="99"/>
         </div>
         <div class="input-optional">
             <label>EDAD</label>
-            <input type="number" name="edad"/>
+            <input type="number" min="1" name="edad"/>
         </div>
         <div class="input-optional">
-            <label>PESO</label>
-            <input type="number" name="peso" step="0.01"/>
+            <label>PESO (KG)</label>
+            <input type="number" min="1" name="peso"/>
         </div>
         <div class="input-optional">
-            <label>ALTURA</label>
-            <input type="number" asp-format="{0:n2} name="altura" step="0.01"/>
+            <label>ALTURA (CM)</label>
+            <input type="number" min="1" name="altura"/>
         </div>
     </div>
 

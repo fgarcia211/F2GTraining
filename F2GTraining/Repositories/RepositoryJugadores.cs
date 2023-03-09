@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 #region PROCEDURES
 
-/*CREATE OR ALTER PROCEDURE SP_INSERT_JUGADOR (@IDEQUIPO INT, @IDPOSICION INT, @NOMBRE NVARCHAR(100), @DORSAL INT, @EDAD INT, @PESO FLOAT, @ALTURA FLOAT)
+/*CREATE OR ALTER PROCEDURE SP_INSERT_JUGADOR (@IDEQUIPO INT, @IDPOSICION INT, @NOMBRE NVARCHAR(100), @DORSAL INT, @EDAD INT, @PESO INT, @ALTURA INT)
 AS
     INSERT INTO JUGADORES VALUES (
 	(SELECT ISNULL(MAX(ID),0) FROM JUGADORES)+1,@IDEQUIPO,@IDPOSICION,@NOMBRE,@DORSAL,@EDAD,@PESO,@ALTURA)
@@ -47,19 +47,19 @@ namespace F2GTraining.Repositories
             this.context = context;
         }
 
-        public async Task InsertJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, float peso, float altura)
+        public async Task InsertJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, int peso, int altura)
         {
             string sql = "SP_INSERT_JUGADOR @IDEQUIPO, @IDPOSICION, @NOMBRE, @DORSAL, @EDAD, @PESO, @ALTURA";
 
             SqlParameter pamIdEq = new SqlParameter("@IDEQUIPO", idequipo);
             SqlParameter pamIdPos = new SqlParameter("@IDPOSICION", idposicion);
             SqlParameter pamNom = new SqlParameter("@NOMBRE", nombre);
-            SqlParameter pamDor = new SqlParameter("@DORSAL", this.InputIntVacio(dorsal));
-            SqlParameter pamEda = new SqlParameter("@EDAD", this.InputIntVacio(edad));
-            SqlParameter pamPes = new SqlParameter("@PESO", this.InputFloatVacio(peso));
-            SqlParameter pamAlt = new SqlParameter("@ALTURA", this.InputFloatVacio(altura));
+            SqlParameter pamDor = new SqlParameter("@DORSAL", dorsal);
+            SqlParameter pamEda = new SqlParameter("@EDAD", edad);
+            SqlParameter pamPes = new SqlParameter("@PESO", peso);
+            SqlParameter pamAlt = new SqlParameter("@ALTURA", altura);
 
-            await this.context.Database.ExecuteSqlRawAsync(sql);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamIdEq, pamIdPos, pamNom, pamDor, pamEda, pamPes, pamAlt);
 
         }
 
@@ -97,30 +97,6 @@ namespace F2GTraining.Repositories
             SqlParameter pamIdJug = new SqlParameter("@IDJUGADOR", idjugador);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamIdJug);
 
-        }
-
-        public int InputIntVacio(int valor)
-        {
-            if (valor == null)
-            {
-                return -1;
-            }
-            else
-            {
-                return valor;
-            }
-        }
-
-        public float InputFloatVacio(float valor)
-        {
-            if (valor == null)
-            {
-                return -1;
-            }
-            else
-            {
-                return valor;
-            }
         }
 
     }

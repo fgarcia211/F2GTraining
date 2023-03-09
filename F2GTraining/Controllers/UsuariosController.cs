@@ -53,7 +53,7 @@ namespace F2GTraining.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistroUsuario(string usuario, string contrasenha, string correo, int telefono)
+        public async Task<IActionResult> RegistroUsuario(string usuario, string contrasenha, string correo, int telefono)
         {
             if (usuario.Count() > 16)
             {
@@ -82,7 +82,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                this.repo.InsertUsuario(usuario, correo, contrasenha, telefono);
+                await this.repo.InsertUsuario(usuario, correo, contrasenha, telefono);
                 TempData["MENSAJE"] = "Usuario registrado correctamente";
                 return RedirectToAction("InicioSesion");
             }
