@@ -41,6 +41,14 @@ namespace F2GTraining.Controllers
 
         public IActionResult CrearEquipo()
         {
+
+            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+
+            if (user == null)
+            {
+                return RedirectToAction("InicioSesion", "Usuarios");
+            }
+
             return View();
         }
 
@@ -49,12 +57,17 @@ namespace F2GTraining.Controllers
         {
             Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
 
+            if (user == null)
+            {
+                return RedirectToAction("InicioSesion", "Usuarios");
+            }
+
             string extension = System.IO.Path.GetExtension(imagen.FileName);
 
             if (extension == ".png")
             {
                 string path = await this.helperArchivos.UploadFileAsync(imagen, nombre.ToLower());
-                this.repo.InsertEquipo(user.IdUsuario, nombre, path);
+                await this.repo.InsertEquipo(user.IdUsuario, nombre, path);
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else
@@ -62,8 +75,8 @@ namespace F2GTraining.Controllers
                 ViewData["ERROR"] = "ERROR: La imagen debe ser en formato PNG";
                 return View();
             }
-            
-            return View();
+        
         }
+
     }
 }

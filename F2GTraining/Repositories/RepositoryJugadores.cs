@@ -17,7 +17,7 @@ AS
 	WHERE ID = @IDJUGADOR
 GO
 
-CREATE OR ALTER PROCEDURE SP_FIND_JUGADOR_IDEQUIPO (@IDEQUIPO INT)
+CREATE OR ALTER PROCEDURE SP_FIND_JUGADORES_IDEQUIPO (@IDEQUIPO INT)
 AS
 	SELECT * FROM JUGADORES
 	WHERE IDEQUIPO = @IDEQUIPO
@@ -54,10 +54,48 @@ namespace F2GTraining.Repositories
             SqlParameter pamIdEq = new SqlParameter("@IDEQUIPO", idequipo);
             SqlParameter pamIdPos = new SqlParameter("@IDPOSICION", idposicion);
             SqlParameter pamNom = new SqlParameter("@NOMBRE", nombre);
-
-            //CONTINUA HACIENDO LOS PROCEDURES
+            SqlParameter pamDor = new SqlParameter("@DORSAL", this.InputIntVacio(dorsal));
+            SqlParameter pamEda = new SqlParameter("@EDAD", this.InputIntVacio(edad));
+            SqlParameter pamPes = new SqlParameter("@PESO", this.InputFloatVacio(peso));
+            SqlParameter pamAlt = new SqlParameter("@ALTURA", this.InputFloatVacio(altura));
 
             await this.context.Database.ExecuteSqlRawAsync(sql);
+
+        }
+
+        public List<Posicion> GetPosiciones()
+        {
+            string sql = "SP_FIND_POSITIONS";
+            var consulta = this.context.Posiciones.FromSqlRaw(sql);
+            List<Posicion> posiciones = consulta.AsEnumerable().ToList();
+            return posiciones;
+
+        }
+        public Jugador GetJugadorID(int id)
+        {
+            string sql = "SP_FIND_JUGADOR_ID @IDJUGADOR";
+            SqlParameter pamIdJug = new SqlParameter("@IDJUGADOR", id);
+            var consulta = this.context.Jugadores.FromSqlRaw(sql, pamIdJug);
+            Jugador player = consulta.AsEnumerable().FirstOrDefault();
+            return player;
+
+        }
+
+        public List<Jugador> GetJugadoresEquipo(int idequipo)
+        {
+            string sql = "SP_FIND_JUGADORES_IDEQUIPO @IDEQUIPO";
+            SqlParameter pamIdEq = new SqlParameter("@IDEQUIPO", idequipo);
+            var consulta = this.context.Jugadores.FromSqlRaw(sql, pamIdEq);
+            List<Jugador> players = consulta.AsEnumerable().ToList();
+            return players;
+
+        }
+
+        public async Task DeleteJugador(int idjugador)
+        {
+            string sql = "SP_DELETE_JUGADOR @IDJUGADOR";
+            SqlParameter pamIdJug = new SqlParameter("@IDJUGADOR", idjugador);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamIdJug);
 
         }
 
@@ -85,15 +123,5 @@ namespace F2GTraining.Repositories
             }
         }
 
-        public Usuario GetUsuarioNamePass(string nombre, string contrasenia)
-        {
-            string sql = "SP_FIND_USUARIO @NOMBRE, @CONTRASENIA";
-            SqlParameter pamNom = new SqlParameter("@NOMBRE", nombre);
-            SqlParameter pamCon = new SqlParameter("@CONTRASENIA", contrasenia);
-            var consulta = this.context.Usuarios.FromSqlRaw(sql, pamNom, pamCon);
-            Usuario user = consulta.AsEnumerable().FirstOrDefault();
-            return user;
-
-        }
     }
 }

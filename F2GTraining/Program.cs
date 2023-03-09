@@ -12,10 +12,12 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromHours(12);
 });
 
-string connectionString = builder.Configuration.GetConnectionString("databaseF2G");
+string connectionString = builder.Configuration.GetConnectionString("databaseF2GClase");
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<HelperRutasProvider>();
 builder.Services.AddSingleton<HelperSubirFicheros>();
 builder.Services.AddTransient<RepositoryUsuarios>();
+builder.Services.AddTransient<RepositoryJugadores>();
 builder.Services.AddTransient<RepositoryEquipos>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 

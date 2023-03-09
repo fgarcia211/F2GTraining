@@ -14,5 +14,7 @@ namespace F2GTraining.Data
         public DbSet<Equipo> Equipos { get; set; }
 
         public DbSet<Jugador> Jugadores { get; set; }
+
+        public DbSet<Posicion> Posiciones { get; set; }
     }
 }

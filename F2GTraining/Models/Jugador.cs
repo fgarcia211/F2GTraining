@@ -26,10 +26,10 @@ namespace F2GTraining.Models
         public int Edad { get; set; }
 
         [Column("PESO")]
-        public float Peso { get; set; }
+        public decimal Peso { get; set; }
 
         [Column("ALTURA")]
-        public float Altura { get; set; }
+        public decimal Altura { get; set; }
 
 
     }
