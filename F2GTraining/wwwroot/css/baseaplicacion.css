@@ -98,13 +98,6 @@
     padding: 20px 5% 20px 5%;
 }
 /*FIN CSS CONTENEDOR PAGINA*/
-@media (max-width: 1470px){
-
-    .contenedor-pagina {
-        height: 530px;
-    }
-
-}
 
 @media (max-width: 710px) {
     

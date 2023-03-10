@@ -36,17 +36,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                List<Jugador> jugadoresUsuario = new List<Jugador>();
-
-                foreach (Equipo equipo in equipos)
-                {
-                    foreach (Jugador jugador in this.repoJug.GetJugadoresEquipo(equipo.IdEquipo))
-                    {
-                        jugadoresUsuario.Add(jugador);
-                    }
-                }
-
-                ViewData["JUGADORESUSUARIO"] = jugadoresUsuario;
+                ViewData["JUGADORESUSUARIO"] = this.repoJug.JugadoresXUsuario(user.IdUsuario);
                 return View(equipos);
             }
 

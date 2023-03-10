@@ -41,10 +41,12 @@ namespace F2GTraining.Repositories
     public class RepositoryJugadores
     {
         private F2GDataBaseContext context;
+        private RepositoryEquipos repoEqu;
 
-        public RepositoryJugadores(F2GDataBaseContext context)
+        public RepositoryJugadores(F2GDataBaseContext context, RepositoryEquipos repoEqu)
         {
             this.context = context;
+            this.repoEqu = repoEqu;
         }
 
         public async Task InsertJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, int peso, int altura)
@@ -97,6 +99,31 @@ namespace F2GTraining.Repositories
             SqlParameter pamIdJug = new SqlParameter("@IDJUGADOR", idjugador);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamIdJug);
 
+        }
+
+        //OPTIMIZAR METODO (INTENTAR CON VISTA, Y PREGUNTAR LO DEL MODELO)
+        public List<Jugador> JugadoresXUsuario(int idusuario)
+        {
+            List<Equipo> equipos = this.repoEqu.GetEquiposUser(idusuario);
+
+            List<int> idsEquipos = new();
+
+            foreach (Equipo equipo in equipos)
+            {
+                idsEquipos.Add(equipo.IdEquipo);
+            }
+
+            var consulta = from datos in this.context.Jugadores
+                           where idsEquipos.Contains(datos.IdEquipo)
+                           select datos;
+
+
+            if (consulta.Count() == 0)
+            {
+                return null;
+            }
+
+            return consulta.ToList();
         }
 
     }

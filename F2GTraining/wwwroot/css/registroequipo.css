@@ -59,8 +59,8 @@ form .check-zone {
 }
 
 form button {
-    margin-top: 50px;
-    width: 100%;
+    width: 39%;
+    margin: 50px 5% 0px 5%;
     border: 1px solid black;
     font-size: 25px;
     border-radius: 100px;
@@ -73,6 +73,16 @@ form button {
 form button:hover {
     color:white;
     background-color: limegreen;
+}
+
+form button.back-button {
+    color:darkred;
+    background-color: lightcoral;
+}
+
+form button.back-button:hover {
+    color:white;
+    background-color: red;
 }
 
 .contenedor-pagina {
@@ -103,5 +113,11 @@ form button:hover {
 
     form button {
         margin-top: 0px;
+    }
+}
+
+@media (max-width: 500px){
+    form button {
+        font-size: 17px;
     }
 }

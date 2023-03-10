@@ -8,6 +8,11 @@
 
     List<Jugador> jugadores = ViewData["JUGADORESUSUARIO"] as List<Jugador>;
 
+    List<int> idportero = new List<int>(new int[] {1});
+    List<int> iddefensa = new List<int>(new int[] {2,3,4,5});
+    List<int> idmedios = new List<int>(new int[] {6,7,8,9,10});
+    List<int> iddelanteros = new List<int>(new int[] {11,12,13,14});
+
 }
 
 @section CSSLinks{
@@ -22,14 +27,12 @@
 }
 
 @section Scripts{
-    <script src="~/js/menuequipo.js"></script>
     <script>
         $(function() {
-            muestraOpcionesJug(1);
-            esconderEquipos();
+            esconderEquipos();         
         });
     </script>
-    
+    <script src="~/js/menuequipo.js" asp-append-version="true"></script>
 }
 
 <div class="teamview-menu">
@@ -76,27 +79,69 @@
         <div class="player-section">
             <div class="border-section"></div>
             <div class="player-zone">
-                <div class="player-goalkeeper">
-                    <div class="title-position">PORTEROS</div>
-                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN PORTEROS-->
-                    <div class="player" id="player1" onclick="muestraOpcionesJug(1)">Juanito Garcia Higuita</div>
-                    <div class="options-player" id="optplayer1" style="display: none">
-                        <button>VER GRAFICA</button>
-                        <button>ELIMINAR JUGADOR</button>
+                @if (jugadores != null)
+                {
+                    <div class="player-goalkeeper">
+                        <div class="title-position">PORTEROS</div>
+                        @foreach (Jugador jug in jugadores)
+                        {
+                            @if(idportero.Contains(jug.IdPosicion)){
+                                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                                    <button>VER GRAFICA</button>
+                                    <button>ELIMINAR JUGADOR</button>
+                                </div>
+                            }
+                        
+                        }
                     </div>
-                </div>
-                <div class="player-defense">
-                    <div class="title-position">DEFENSAS</div>
-                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DEFENSAS-->
-                </div>
-                <div class="player-midfield">
-                    <div class="title-position">MEDIOCENTROS</div>
-                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN MEDIOCENTROS-->
-                </div>
-                <div class="player-striker">
-                    <div class="title-position">DELANTEROS</div>
-                    <!--BUCLE CON TODOS LOS JUGADORES QUE SEAN DELANTEROS-->
-                </div>
+                    <div class="player-defense">
+                        <div class="title-position">DEFENSAS</div>
+                        @foreach (Jugador jug in jugadores)
+                        {
+                            @if(iddefensa.Contains(jug.IdPosicion)){
+                                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                                    <button>VER GRAFICA</button>
+                                    <button>ELIMINAR JUGADOR</button>
+                                </div>
+                            }
+                        
+                        }
+                    </div>
+                    <div class="player-midfield">
+                        <div class="title-position">MEDIOCENTROS</div>
+                        @foreach (Jugador jug in jugadores)
+                        {
+                            @if(idmedios.Contains(jug.IdPosicion)){
+                                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                                    <button>VER GRAFICA</button>
+                                    <button>ELIMINAR JUGADOR</button>
+                                </div>
+                            }
+                        
+                        }
+                    </div>
+                    <div class="player-striker">
+                        <div class="title-position">DELANTEROS</div>
+                        @foreach (Jugador jug in jugadores)
+                        {
+                            @if(iddelanteros.Contains(jug.IdPosicion)){
+                                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                                    <button>VER GRAFICA</button>
+                                    <button>ELIMINAR JUGADOR</button>
+                                </div>
+                            }
+                        
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p style="color:black">Sin jugadores</p>
+                }
             </div>
             <div class="border-section"></div>
         </div>

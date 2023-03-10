@@ -1,4 +1,9 @@
-﻿function esconderEquipos() {
+﻿function muestraOpciones(idjugador) {
+    console.log(idjugador)
+    var divisor = $("#optplayer-" + idjugador).toggle(300);
+}
+
+function esconderEquipos() {
 
     var equipoSelecc = $("#selectorequipo").val()
 
@@ -17,10 +22,20 @@
     $("#teamimage-" + equipoSelecc).show();
     $("#teamaction-" + equipoSelecc).show();
 
-    $("#equiposeleccionado").val() = $("#selectorequipo").val();
-
+    cambiarJugadores(equipoSelecc, $("#equiposeleccionado").val());
+    $("#equiposeleccionado").val(equipoSelecc);
 }
 
-function muestraOpcionesJug(idjugador) {
-    var divisor = $("#optplayer" + idjugador).toggle(300);
+function cambiarJugadores(idequiponuevo, idequipoviejo) {
+
+    console.log(idequiponuevo, idequipoviejo);
+
+    var divisoresOpcionesJug = $(".options-player");
+
+    for (var i = 0; i < divisoresOpcionesJug.length; i++) {
+        $(divisoresOpcionesJug[i]).hide()
+    }
+
+    $("[data-idequipo='" + idequipoviejo + "']").hide();
+    $("[data-idequipo='" + idequiponuevo + "']").show();
 }

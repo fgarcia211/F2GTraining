@@ -11,3 +11,7 @@
         texto.innerText = "Para registrar el equipo, selecciona una imagen (Solo formato .png)"
     }
 }
+
+function vuelveInicio() {
+    window.location.href = "/equipos/MenuEquipo";
+}
