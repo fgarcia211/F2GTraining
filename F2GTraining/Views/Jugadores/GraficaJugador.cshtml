@@ -28,12 +28,40 @@
         <h2>JUGADOR: @Model.Nombre.ToUpper()</h2>
         <div class="personal-info">
             <div class="double-info">
-                <label>DORSAL: @Model.Dorsal</label>
-                <label>EDAD: @Model.Edad</label>
+                @if (Model.Dorsal != 0)
+                {
+                    <label>DORSAL: @Model.Dorsal</label>
+                }
+                else
+                {
+                    <label>DORSAL: N/A</label>
+                }
+                @if (Model.Edad != 0)
+                {
+                    <label>EDAD: @Model.Edad</label>
+                }
+                else
+                {
+                    <label>EDAD: N/A</label>
+                }
             </div>
             <div class="double-info">
-                <label>PESO: @Model.Peso</label>
-                <label>ALTURA: @Model.Altura</label>
+                @if (Model.Peso != 0)
+                {
+                    <label>PESO: @Model.Peso</label>
+                }
+                else
+                {
+                    <label>PESO: N/A</label>
+                }
+                @if (Model.Altura != 0)
+                {
+                    <label>ALTURA: @Model.Altura</label>
+                }
+                else
+                {
+                    <label>ALTURA: N/A</label>
+                }
             </div>
         </div>
         <h2>PUNTUACION DE ESTADISTICAS</h2>

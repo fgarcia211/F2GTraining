@@ -62,7 +62,7 @@
                     <img src="@equipo.Imagen.Replace("~",string.Empty)" />
                 </div>
                 <div class="link-team-actions" id="teamaction-@equipo.IdEquipo">
-                    <a asp-controller="Sesiones" asp-action="ListaSesiones" asp-route-idequipo="@equipo.IdEquipo" class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
+                    <a asp-controller="Entrenamientos" asp-action="ListaSesiones" asp-route-idequipo="@equipo.IdEquipo" class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
                     <a asp-controller="Jugadores" asp-action="CrearJugador" asp-route-idequipo="@equipo.IdEquipo" class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
                     <a asp-controller="Equipos" asp-action="CrearEquipo" class="minibutton-teamview">NUEVO EQUIPO</a>
                 </div>

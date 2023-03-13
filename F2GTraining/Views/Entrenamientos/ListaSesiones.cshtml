@@ -1,0 +1,35 @@
+﻿@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/listasesiones.css" asp-append-version="true"/>
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@user.Nombre</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/listasesiones.js" asp-append-version="true"></script>
+}
+
+<div class="view-sessions-zone">
+    <div class="team-title">
+        <p>SESIONES DE ENTRENAMIENTO: NOMBRE DEL EQUIPO</p>
+    </div>
+    <div class="sessions-site">
+        <div class="session-name">
+            NOMBRE DE LA SESION DE ENTRENAMIENTO
+        </div>
+        <div class="session-options">
+            <button>VER SESION</button>
+            <button>BORRAR SESION</button>
+        </div>
+    </div>
+    <div class="border-sessions"></div>
+    <button class="back-button">VOLVER</button>
+</div>
