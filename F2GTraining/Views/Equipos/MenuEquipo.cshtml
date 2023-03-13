@@ -6,6 +6,11 @@
     string controllerNewTeam = "Equipos";
     string actionNewTeam = "CrearEquipo";
 
+    string controllerPlayer = "Jugadores";
+
+    string actionShowPlayer = "GraficaJugador";
+    string actionDeletePlayer = "DeleteJugador";
+
     List<Jugador> jugadores = ViewData["JUGADORESUSUARIO"] as List<Jugador>;
 
     List<int> idportero = new List<int>(new int[] {1});
@@ -69,7 +74,7 @@
             <div class="newteam-container">
                 <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
                 <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>
-                <button class="" onclick="location.href='@Url.Action(actionNewTeam, controllerNewTeam, new {})'">NUEVO EQUIPO</button>
+                <button onclick="location.href='@Url.Action(actionNewTeam, controllerNewTeam, new {})'">NUEVO EQUIPO</button>
             </div>   
         }
     </div>
@@ -88,8 +93,8 @@
                             @if(idportero.Contains(jug.IdPosicion)){
                                 <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
                                 <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
-                                    <button>VER GRAFICA</button>
-                                    <button>ELIMINAR JUGADOR</button>
+                                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
                                 </div>
                             }
                         
@@ -102,8 +107,8 @@
                             @if(iddefensa.Contains(jug.IdPosicion)){
                                 <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
                                 <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
-                                    <button>VER GRAFICA</button>
-                                    <button>ELIMINAR JUGADOR</button>
+                                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
                                 </div>
                             }
                         
@@ -116,8 +121,8 @@
                             @if(idmedios.Contains(jug.IdPosicion)){
                                 <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
                                 <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
-                                    <button>VER GRAFICA</button>
-                                    <button>ELIMINAR JUGADOR</button>
+                                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
                                 </div>
                             }
                         
@@ -130,8 +135,8 @@
                             @if(iddelanteros.Contains(jug.IdPosicion)){
                                 <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
                                 <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
-                                    <button>VER GRAFICA</button>
-                                    <button>ELIMINAR JUGADOR</button>
+                                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
                                 </div>
                             }
                         
@@ -140,7 +145,7 @@
                 }
                 else
                 {
-                    <p style="color:black">Sin jugadores</p>
+                    <p style="color:black">SIN JUGADORES EN NINGÚN EQUIPO</p>
                 }
             </div>
             <div class="border-section"></div>

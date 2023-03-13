@@ -95,7 +95,7 @@ namespace F2GTraining.Repositories
 
         public async Task DeleteJugador(int idjugador)
         {
-            string sql = "SP_DELETE_JUGADOR @IDJUGADOR";
+            string sql = "SP_DELETE_JUGADOR_ID @IDJUGADOR";
             SqlParameter pamIdJug = new SqlParameter("@IDJUGADOR", idjugador);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamIdJug);
 

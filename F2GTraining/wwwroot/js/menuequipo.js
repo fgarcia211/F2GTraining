@@ -20,7 +20,7 @@ function esconderEquipos() {
     }
 
     $("#teamimage-" + equipoSelecc).show();
-    $("#teamaction-" + equipoSelecc).show();
+    $("#teamaction-" + equipoSelecc).css("display","grid");
 
     cambiarJugadores(equipoSelecc, $("#equiposeleccionado").val());
     $("#equiposeleccionado").val(equipoSelecc);

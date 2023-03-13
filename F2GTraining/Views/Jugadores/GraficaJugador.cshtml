@@ -1,0 +1,57 @@
+﻿@model Jugador
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/graficajugador.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@user.Nombre</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/highcharts.js"></script>
+    <script src="~/js/graficajugador.js" asp-append-version="true"></script>
+}
+
+<div class="graphic-all-zone">
+    <div class="canvas-zone">
+        <div id="graf-player"></div>
+    </div>
+    <div class="player-all-info">
+        <h2>JUGADOR: @Model.Nombre.ToUpper()</h2>
+        <div class="personal-info">
+            <div class="double-info">
+                <label>DORSAL: @Model.Dorsal</label>
+                <label>EDAD: @Model.Edad</label>
+            </div>
+            <div class="double-info">
+                <label>PESO: @Model.Peso</label>
+                <label>ALTURA: @Model.Altura</label>
+            </div>
+        </div>
+        <h2>PUNTUACION DE ESTADISTICAS</h2>
+        <div class="stats-info">
+            <div class="double-info">
+                <label>TIRO: 0</label>
+                <label>PASE: 0</label>
+            </div>
+            <div class="double-info">
+                <label>REGATE: 0</label>
+                <label>DEFENSA: 0</label>
+            </div>
+            <div class="double-info">
+                <label>RITMO: 0</label>
+                <label>FISICO: 0</label>
+            </div>
+        </div>
+        <button onclick="alert('Proximamente')">DESCARGAR INFORME</button>
+        <button onclick="vuelveInicio()">VOLVER A MIS EQUIPOS</button>
+    </div>
+</div>

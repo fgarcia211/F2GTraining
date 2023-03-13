@@ -64,5 +64,49 @@ namespace F2GTraining.Controllers
             }
 
         }
+
+        public async Task<IActionResult> DeleteJugador(int idjugador)
+        {
+            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+
+            if (user == null)
+            {
+                return RedirectToAction("InicioSesion", "Usuarios");
+            }
+            else
+            {
+                List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(user.IdUsuario);
+                
+                if (jugadoresUser.Contains(this.repoJug.GetJugadorID(idjugador))){
+
+                    await this.repoJug.DeleteJugador(idjugador);
+
+                }
+                
+                return RedirectToAction("MenuEquipo", "Equipos");
+            }
+        }
+
+        public IActionResult GraficaJugador(int idjugador)
+        {
+            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+
+            if (user == null)
+            {
+                return RedirectToAction("InicioSesion", "Usuarios");
+            }
+            else
+            {
+                List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(user.IdUsuario);
+                Jugador jugMostrar = this.repoJug.GetJugadorID(idjugador);
+
+                if (jugadoresUser.Contains(jugMostrar))
+                {
+                    return View(jugMostrar);
+                }
+
+                return RedirectToAction("MenuEquipo", "Equipos");
+            }
+        }
     }
 }

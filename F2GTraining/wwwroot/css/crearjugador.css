@@ -2,7 +2,7 @@
     background: linear-gradient(90deg, rgba(0,223,89,1) 0%, rgba(0,0,0,1) 49%, rgba(240,4,4,1) 100%);
     text-align: center;
     font-size: 35px;
-    padding: 20px 0px 20px 0px;
+    padding: 20px 5% 20px 5%;
     border: 1px solid white;
     margin: 20px 0px 0px 0px;
 }
@@ -55,29 +55,29 @@
 }
 
 .form-register-zone form .inputs-optional-zone {
-    width: 50%;
+    width:50%;
     text-align: center;
     border: 1px solid white;
     background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(189,54,54,1) 100%);
 }
 
-.form-register-zone form .inputs-optional-zone .double-input {
-    width: 50%;
-    float: left;
+.form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input {
+    width: 100%;
+    display: flex;
 }
 
-.form-register-zone form .inputs-optional-zone .double-input .input-optional {
+.form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input .input-optional {
     margin-bottom: 60px;
+    width: 50%;
 }
 
-.form-register-zone form .inputs-optional-zone .double-input .input-optional label {
+.form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input .input-optional label {
     font-size: 26px;
     display: block;
 }
 
-.form-register-zone form .inputs-optional-zone .double-input .input-optional input {
+.form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input .input-optional input {
     margin: 10px 0px 0px 0px;
-    width: 35%;
     padding: 10px 0px 10px 0px;
     border: none;
     border-radius: 100px;
@@ -114,10 +114,10 @@ form button.back-button:hover {
 
 @media (max-width: 1000px) {
     .form-register-zone form .input-site {
-        font-size: 25px;
+        font-size: 22px;
     }
 
-    .form-register-zone form .inputs-optional-zone .double-input .input-optional input {
+    .form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input .input-optional input {
         width: 60%;
     }
 }
@@ -125,7 +125,7 @@ form button.back-button:hover {
 @media (max-width: 710px) {
 
     .contenedor-pagina {
-        height: 1500px;
+        height: 1050px;
     }
 
     .form-register-zone form .inputs-required-zone {
@@ -140,8 +140,17 @@ form button.back-button:hover {
         display: block;
     }
 
-    .form-register-zone form .inputs-optional-zone .double-input {
-        width: 50%;
-        float: left;
+    .form-register-zone form .inputs-optional-zone .inputs-opt-zone .double-input {
+        width: 100%;
+    }
+
+    .show-team {
+        background: black;
+        font-size: 26px;
+    }
+
+    form button {
+        width: 90%;
+        margin: 40px 5% 0px 5%;
     }
 }

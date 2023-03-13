@@ -15,6 +15,10 @@
     </div>
 }
 
+@section Scripts{
+    <script src="~/js/crearjugador.js" asp-append-version="true"></script>
+}
+
 <div class="show-team">
     <p>Jugador para equipo: @ViewData["NOMBRE"]</p>
 </div>
@@ -44,24 +48,26 @@
             <div class="title-input-zone">
                 <p>PARAMETROS OPCIONALES</p>
             </div>
-            <div class="double-input">
-                <div class="input-optional">
-                    <label>DORSAL</label>
-                    <input type="number" name="dorsal" min="1" max="99"/>
+            <div class="inputs-opt-zone">
+                <div class="double-input">
+                    <div class="input-optional">
+                        <label>DORSAL</label>
+                        <input type="number" min="1" name="dorsal"/>
+                    </div>
+                    <div class="input-optional">
+                        <label>EDAD</label>
+                        <input type="number" min="1" name="edad"/>
+                    </div>
                 </div>
-                <div class="input-optional">
-                    <label>EDAD</label>
-                    <input type="number" min="1" name="edad"/>
-                </div>
-            </div>
-            <div class="double-input">
-                <div class="input-optional">
-                    <label>PESO (KG)</label>
-                    <input type="number" min="1" name="peso"/>
-                </div>
-                <div class="input-optional">
-                    <label>ALTURA (CM)</label>
-                    <input type="number" min="1" name="altura"/>
+                <div class="double-input">
+                    <div class="input-optional">
+                        <label>PESO (KG)</label>
+                        <input type="number" min="1" name="peso"/>
+                    </div>
+                    <div class="input-optional">
+                        <label>ALTURA (CM)</label>
+                        <input type="number" min="1" name="altura"/>
+                    </div>
                 </div>
             </div>
         </div>
