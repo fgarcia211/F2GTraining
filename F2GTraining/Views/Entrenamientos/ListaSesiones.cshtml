@@ -28,8 +28,8 @@
             PARTIDO AMISTOSO CONTRA ATLETICO JAGUEIRO FC
         </div>
         <div class="session-options" id="sessionopt-1">
-            <button onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { idsesion = 1 })'">VER SESION</button>
-            <button onclick="location.href='@Url.Action("EliminaEntrenamiento", "Entrenamientos", new { idsesion = 1 })'">BORRAR SESION</button>
+            <button onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { idsesion = 1, idequipo=ViewData["IDEQUIPO"] })'">VER SESION</button>
+            <button onclick="location.href='@Url.Action("EliminaEntrenamiento", "Entrenamientos", new { idsesion = 1, idequipo=ViewData["IDEQUIPO"]  })'">BORRAR SESION</button>
         </div>
         @*<p>SIN SESIONES</p>*@
     </div>
