@@ -18,5 +18,16 @@ namespace F2GTraining.Controllers
             ViewData["MENSAJE"] = "Ver sesiones para el equipo con ID" + idequipo;
             return View();
         }
+
+        public IActionResult EliminaEntrenamiento(int idsesion)
+        {
+            return RedirectToAction("ListaSesiones");
+        }
+
+        public IActionResult VistaEntrenamiento(int idsesion)
+        {
+            ViewData["MENSAJE"] = idsesion;
+            return View();
+        }
     }
 }

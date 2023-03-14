@@ -4,6 +4,7 @@
 
 @section CSSLinks{
     <link rel="stylesheet" href="~/css/listasesiones.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true"/>
 }
 
 @section ZonaLogueo{
@@ -14,6 +15,7 @@
 }
 
 @section Scripts{
+    <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/listasesiones.js" asp-append-version="true"></script>
 }
 
@@ -22,14 +24,18 @@
         <p>SESIONES DE ENTRENAMIENTO: NOMBRE DEL EQUIPO</p>
     </div>
     <div class="sessions-site">
-        <div class="session-name">
-            NOMBRE DE LA SESION DE ENTRENAMIENTO
+        <div class="session-name" onclick="muestraOpciones(1)">
+            PARTIDO AMISTOSO CONTRA ATLETICO JAGUEIRO FC
         </div>
-        <div class="session-options">
-            <button>VER SESION</button>
-            <button>BORRAR SESION</button>
+        <div class="session-options" id="sessionopt-1">
+            <button onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { idsesion = 1 })'">VER SESION</button>
+            <button onclick="location.href='@Url.Action("EliminaEntrenamiento", "Entrenamientos", new { idsesion = 1 })'">BORRAR SESION</button>
         </div>
+        @*<p>SIN SESIONES</p>*@
     </div>
     <div class="border-sessions"></div>
-    <button class="back-button">VOLVER</button>
+    <div class="button-zone">
+        <button onclick="vuelveInicio()" class="back-button">VOLVER</button>
+        <button onclick="crearSesion()" class="new-session">CREAR SESION</button>
+    </div>
 </div>
