@@ -7,7 +7,7 @@ function vuelveInicio() {
     window.location.href = "/equipos/MenuEquipo";
 }
 
-function crearSesion() {
+function crearSesion(idequipo) {
     document.getElementsByClassName("view-sessions-zone")[0].style.display = "none";
     Swal.fire({
         title: "Nombre de la Sesion",
@@ -21,7 +21,14 @@ function crearSesion() {
             return false
         }
     }).then(resultado => {
-        document.getElementsByClassName("view-sessions-zone")[0].style.display = "block"
+        console.log(resultado)
+        if (resultado.isConfirmed) {
+            $('#inputnombre').val(resultado.value);
+            $('#form-new-team').submit();
+        }
+        else {
+            document.getElementsByClassName("view-sessions-zone")[0].style.display = "block"
+        }
     });
 }
 
