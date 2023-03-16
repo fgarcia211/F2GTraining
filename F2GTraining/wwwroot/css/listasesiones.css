@@ -1,6 +1,6 @@
 ﻿.view-sessions-zone {
-    width: 70%;
-    margin: 20px 15% 20px 15%;
+    width: 80%;
+    margin: 20px 10% 20px 10%;
 }
 
 .view-sessions-zone .team-title {
@@ -71,6 +71,11 @@
     background-color: #6B54B4;
 }
 
+.view-sessions-zone .sessions-site .session-options button.finishbutton{
+    width: 50%;
+    margin: 0px 25% 0px 25%;
+}
+
 .view-sessions-zone .border-sessions {
     background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(177,124,251,1) 100%);
     border: 1px solid white;
@@ -85,7 +90,7 @@
     width: 40%;
     margin: 50px 5% 10px 5%;
     border: 1px solid black;
-    font-size: 23px;
+    font-size: 20px;
     border-radius: 100px;
     padding: 15px;
     color: white;
@@ -106,9 +111,19 @@
 .swal2-container {
     height: 810px !important;
 }
-@media (max-width: 900px) {
+
+
+@media (max-width: 940px) {
     .view-sessions-zone .sessions-site p {
         font-size: 55px;
+    }
+
+    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+        font-size: 16px;
+    }
+
+    .view-sessions-zone .team-title p {
+        font-size: 22px;
     }
 }
 
@@ -149,6 +164,10 @@
         background-color: mediumpurple;
         transition: background-color 0.5s;
         cursor: pointer;
+    }
+
+    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+        font-size: 20px;
     }
 }
 

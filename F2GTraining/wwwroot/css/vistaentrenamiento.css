@@ -195,4 +195,8 @@
         height: 1250px;
     }
 
+    .session-info-view .session-section .session-timer {
+        font-size: 78px;
+    }
+
 }

@@ -32,14 +32,47 @@
     @if (Model.Activo)
     {
         <script>
-            iniciarEntrenamiento(@Model.FechaInicio);
+            $(document).ready(function() {
+                iniciarEntrenamiento(
+                    [
+                        @Model.FechaInicio.Value.Year,
+                        @Model.FechaInicio.Value.Month,
+                        @Model.FechaInicio.Value.Day,
+                        @Model.FechaInicio.Value.Hour,
+                        @Model.FechaInicio.Value.Minute,
+                        @Model.FechaInicio.Value.Second,
+                        @Model.FechaInicio.Value.Millisecond
+                    ]
+                );
+            });
         </script>
     }
 
     @if (Model.FechaFin != null)
     {
         <script>
-            mostrarDuracion(@Model.FechaInicio);
+            $(document).ready(function () {
+                mostrarDuracion(
+                    [
+                        @Model.FechaInicio.Value.Year,
+                        @Model.FechaInicio.Value.Month,
+                        @Model.FechaInicio.Value.Day,
+                        @Model.FechaInicio.Value.Hour,
+                        @Model.FechaInicio.Value.Minute,
+                        @Model.FechaInicio.Value.Second,
+                        @Model.FechaInicio.Value.Millisecond
+                    ],
+                    [
+                        @Model.FechaFin.Value.Year,
+                        @Model.FechaFin.Value.Month,
+                        @Model.FechaFin.Value.Day,
+                        @Model.FechaFin.Value.Hour,
+                        @Model.FechaFin.Value.Minute,
+                        @Model.FechaFin.Value.Second,
+                        @Model.FechaFin.Value.Millisecond
+                    ]
+                );
+            });
         </script>
     }
 }
@@ -52,7 +85,7 @@
                 <p>JUGADORES DISPONIBLES</p>
             </div>
             <div class="player-site">
-                @if (Model.Activo == false)
+                @if (!(Model.Activo) && Model.FechaInicio == null)
                 {
                     @foreach (Jugador jug in jugadores)
                     {
@@ -62,7 +95,7 @@
                         </div>
                     }
                 }
-                else
+                else if(Model.Activo && Model.FechaFin == null)
                 {
                     @foreach (Jugador jug in jugadores)
                     {
@@ -100,9 +133,45 @@
                             </div>
                         </div>
                     }
-                }
-                
-                
+                }else if(!(Model.Activo) && Model.FechaFin != null)
+                {
+                    @foreach (Jugador jug in jugadores)
+                    {
+                        <div class="player-started">
+                            <p>@jug.Nombre.ToUpper()</p>
+                        </div>
+                        <div class="player-stats">
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    <label>TIRO:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                                <div class="input-zone">
+                                    <label>RITMO:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                                <div class="input-zone">
+                                    <label>DEFENSA:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                            </div>
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    <label>PASE:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                                <div class="input-zone">
+                                    <label>FISICO:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                                <div class="input-zone">
+                                    <label>REGATE:</label>
+                                    <input type="number" min="0" max="10" step="1">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }  
             </div>
             <div class="player-border"></div>
         </div>
@@ -112,21 +181,32 @@
             </div>
             <div class="session-site">
                 <div class="session-buttons">
-                    @if (Model.Activo)
+                    @if (Model.Activo && Model.FechaFin == null)
                     {
                         <button type="submit">FINALIZAR SESION</button>
                     }
-                    else
+                    else if (!(Model.Activo) && Model.FechaInicio == null)
                     {
                         <button type="submit">INICIAR SESION</button>
                     }
                     <button type="button" onclick="location.href='@Url.Action("ListaSesiones", "Entrenamientos", new { idequipo = ViewData["IDEQUIPO"]})'">VOLVER A SESIONES</button>
                 </div>
                 <div class="session-info">
-                    <p>Selecciona los jugadores que participarán en la sesión y pulsa "INICIAR SESION"</p>
+                    @if (!(Model.Activo) && Model.FechaInicio == null)
+                    {
+                        <p>Selecciona los jugadores que participarán en la sesión y pulsa "INICIAR SESION"</p>
+                    }
+                    else if (Model.Activo && Model.FechaFin == null)
+                    {
+                        <p>Asigna las notas a cada jugador (Un 0, o no introducir nada no contará para las estadísticas) y pulsa en "FINALIZAR SESION"</p>
+                    }
+                    else if (!(Model.Activo) && Model.FechaFin != null)
+                    {
+                        <p>Sesion finalizada correctamente. Puedes volver a las sesiones</p>
+                    }              
                 </div>
                 <div class="session-timer">
-                    <p>00:00</p>
+                    <p>00:00:00</p>
                 </div>
             </div>
             <div class="session-border"></div>

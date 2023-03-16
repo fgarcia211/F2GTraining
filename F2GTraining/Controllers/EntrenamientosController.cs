@@ -144,7 +144,7 @@ namespace F2GTraining.Controllers
                 //AQUI VA EL CODIGO PARA RECOGER LOS JUGADORES QUE ESTAN APUNTADOS A ESA SESION
                 jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
             }
-            else
+            else 
             {
                 //AQUI HAY QUE HACER PROCEDURE PARA RECOGER LOS QUE ESTEN EN ESA SESION
                 jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
