@@ -91,6 +91,10 @@
     text-align: center;
 }
 
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone input{
+    text-indent: 5px;
+}
+
 .session-info-view .session-section {
     width: 45%;
     height: 550px;

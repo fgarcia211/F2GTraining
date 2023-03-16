@@ -96,17 +96,28 @@ namespace F2GTraining.Controllers
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            List<Jugador> jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+            Entrenamiento entrena = this.repoEnt.GetEntrenamiento(identrenamiento);
+            List<Jugador> jugadoresequipo;
 
+            if (entrena.Activo == false)
+            {
+                jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+            }
+            else
+            {
+                //AQUI HAY QUE HACER PROCEDURE PARA RECOGER LOS QUE ESTEN EN ESA SESION
+                jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+            }
+            
             ViewData["JUGADORES"] = jugadoresequipo;
             ViewData["IDEQUIPO"] = idequipo;
             ViewData["IDENTRENAMIENTO"] = identrenamiento;
 
-            return View(this.repoEnt.GetEntrenamiento(identrenamiento));
+            return View(entrena);
         }
 
-        /*[HttpPost]
-        public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo, int[] seleccionados)
+        [HttpPost]
+        public async Task<IActionResult> VistaEntrenamiento(int identrenamiento, int idequipo, int[] seleccionados)
         {
             Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
 
@@ -122,17 +133,32 @@ namespace F2GTraining.Controllers
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
-            AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
-            AQUI VA EL CODIGO PARA RECOGER LOS JUGADORES QUE ESTAN APUNTADOS A ESA SESION
+            Entrenamiento entrena = this.repoEnt.GetEntrenamiento(identrenamiento);
+            List<Jugador> jugadoresequipo;
+
+            if (entrena.Activo == false)
+            {
+                //AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
+                //AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
+                await this.repoEnt.EmpezarEntrenamiento(identrenamiento);
+                //AQUI VA EL CODIGO PARA RECOGER LOS JUGADORES QUE ESTAN APUNTADOS A ESA SESION
+                jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+            }
+            else
+            {
+                //AQUI HAY QUE HACER PROCEDURE PARA RECOGER LOS QUE ESTEN EN ESA SESION
+                jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+                //AQUI HAY QUE HACER PROCEDURE PARA ASIGNAR NOTAS A CADA JUGADOR APUNTADO
+                //AQUI VA EL CODIGO PARA QUE LA SESION SE ACABE
+                await this.repoEnt.FinalizarEntrenamiento(identrenamiento);
+            }
+
             ViewData["JUGADORES"] = jugadoresequipo;
-
-
             ViewData["IDEQUIPO"] = idequipo;
             ViewData["IDENTRENAMIENTO"] = identrenamiento;
 
-            return View();
-            
-        }*/
+            return RedirectToAction("VistaEntrenamiento", new { idequipo = idequipo, identrenamiento = identrenamiento });
+
+        }
     }
 }
