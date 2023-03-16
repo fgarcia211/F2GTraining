@@ -100,8 +100,39 @@ namespace F2GTraining.Controllers
 
             ViewData["JUGADORES"] = jugadoresequipo;
             ViewData["IDEQUIPO"] = idequipo;
+            ViewData["IDENTRENAMIENTO"] = identrenamiento;
 
             return View(this.repoEnt.GetEntrenamiento(identrenamiento));
         }
+
+        /*[HttpPost]
+        public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo, int[] seleccionados)
+        {
+            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+
+            if (user == null)
+            {
+                return RedirectToAction("InicioSesion", "Usuarios");
+            }
+
+            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+
+            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            {
+                return RedirectToAction("MenuEquipo", "Equipos");
+            }
+
+            AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
+            AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
+            AQUI VA EL CODIGO PARA RECOGER LOS JUGADORES QUE ESTAN APUNTADOS A ESA SESION
+            ViewData["JUGADORES"] = jugadoresequipo;
+
+
+            ViewData["IDEQUIPO"] = idequipo;
+            ViewData["IDENTRENAMIENTO"] = identrenamiento;
+
+            return View();
+            
+        }*/
     }
 }

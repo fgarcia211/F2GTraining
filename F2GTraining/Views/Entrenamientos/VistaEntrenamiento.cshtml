@@ -28,17 +28,55 @@
     <script src="~/js/vistaentrenamiento.js" asp-append-version="true"></script>
 }
 <form method="post">
+    <input type="hidden" name="idequipo" value="@ViewData["IDEQUIPO"]"/>
+    <input type="hidden" name="identrenamiento" value="@ViewData["IDENTRENAMIENTO"]"/>
     <div class="session-info-view">
         <div class="player-section">
             <div class="player-title">
                 <p>JUGADORES DISPONIBLES</p>
             </div>
             <div class="player-site">
-                @foreach (Jugador jug in jugadores)
+                @*@foreach (Jugador jug in jugadores)
                 {
                     <div class="player">
                         <p>@jug.Nombre.ToUpper()</p>
-                        <input type="checkbox" />
+                        <input type="checkbox" name="seleccionados" value="@jug.IdJugador"/>
+                    </div>
+                }*@
+                @foreach (Jugador jug in jugadores)
+                {
+                    <div class="player-started">
+                        <p>@jug.Nombre.ToUpper()</p>
+                    </div>
+                    <div class="player-stats">
+                        <div class="triple-input">
+                            <div class="input-zone">
+                                <label>TIRO:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                            <div class="input-zone">
+                                <label>RITMO:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                            <div class="input-zone">
+                                <label>DEFENSA:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                        </div>
+                        <div class="triple-input">
+                            <div class="input-zone">
+                                <label>PASE:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                            <div class="input-zone">
+                                <label>FISICO:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                            <div class="input-zone">
+                                <label>REGATE:</label>
+                                <input type="number" min="0" max="10" step="1">
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
@@ -49,15 +87,16 @@
                 <p>PARTIDO DE ENTRENAMIENTO VS ATLETICO DE JAGEIRO</p>
             </div>
             <div class="session-site">
-                <div class="session-buttons-inactive">
-                    <button type="submit">INICIAR SESION</button>
+                <div class="session-buttons">
+                    @*<button type="submit">INICIAR SESION</button>*@
+                    <button type="submit">FINALIZAR SESION</button>
                     <button type="button" onclick="location.href='@Url.Action("ListaSesiones", "Entrenamientos", new { idequipo = ViewData["IDEQUIPO"]})'">VOLVER A SESIONES</button>
                 </div>
                 <div class="session-info">
                     <p>Selecciona los jugadores que participarán en la sesión y pulsa "INICIAR SESION"</p>
                 </div>
                 <div class="session-timer">
-                    <p>00:00</p>
+                    <p>09:51</p>
                 </div>
             </div>
             <div class="session-border"></div>

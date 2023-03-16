@@ -63,6 +63,34 @@
     border: 1px solid white;
 }
 
+.session-info-view .player-section .player-site .player-started {
+    background: linear-gradient(0deg, rgba(47,42,36,1) 0%, rgba(224,201,139,1) 100%);
+    padding: 10px 0px 10px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-site .player-started p{
+    text-align: center;
+}
+
+.session-info-view .player-section .player-site .player-stats {
+    background-color: #FFECDA;
+    padding: 10px 0px 10px 0px;
+    border: 1px solid white;
+    color: black;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input{
+    display: flex;
+    font-size: 14px;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone{
+    width:28%;
+    margin: 2px 2% 2px 2%;
+    text-align: center;
+}
+
 .session-info-view .session-section {
     width: 45%;
     height: 550px;
@@ -87,12 +115,12 @@
     border: 1px solid white;
 }
 
-.session-info-view .session-section .session-site .session-buttons-inactive{
+.session-info-view .session-section .session-site .session-buttons{
     width: 90%;
     margin: 20px 5% 10px 5%;
 }
 
-.session-info-view .session-section .session-site .session-buttons-inactive button{
+.session-info-view .session-section .session-site .session-buttons button{
     width: 100%;
     border: 1px solid white;
     font-size: 16px;
@@ -106,7 +134,7 @@
     margin-bottom: 20px;
 }
 
-.session-info-view .session-section .session-site .session-buttons-inactive button:hover{
+.session-info-view .session-section .session-site .session-buttons button:hover{
     background-color: #85DAEC;
     border: 1px solid black;
     color: #1B5D6B;
