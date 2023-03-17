@@ -99,36 +99,37 @@
                 {
                     @foreach (Jugador jug in jugadores)
                     {
+                        <input type="hidden" name="seleccionados" value="@jug.IdJugador"/>
                         <div class="player-started">
                             <p>@jug.Nombre.ToUpper()</p>
                         </div>
                         <div class="player-stats">
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>TIRO:</label>
-                                    <input type="number" min="0" max="10" step="1">
-                                </div>
-                                <div class="input-zone">
                                     <label>RITMO:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
                                 </div>
                                 <div class="input-zone">
-                                    <label>DEFENSA:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <label>TIRO:</label>
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                </div>
+                                <div class="input-zone">
+                                    <label>PASE:</label>
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
                                 </div>
                             </div>
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>PASE:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <label>REGATE:</label>
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                </div>
+                                <div class="input-zone">
+                                    <label>DEFENSA:</label>
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
                                 </div>
                                 <div class="input-zone">
                                     <label>FISICO:</label>
-                                    <input type="number" min="0" max="10" step="1">
-                                </div>
-                                <div class="input-zone">
-                                    <label>REGATE:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
                                 </div>
                             </div>
                         </div>
@@ -144,29 +145,29 @@
                             <div class="triple-input">
                                 <div class="input-zone">
                                     <label>TIRO:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                                 <div class="input-zone">
                                     <label>RITMO:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                                 <div class="input-zone">
                                     <label>DEFENSA:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                             </div>
                             <div class="triple-input">
                                 <div class="input-zone">
                                     <label>PASE:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                                 <div class="input-zone">
                                     <label>FISICO:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                                 <div class="input-zone">
                                     <label>REGATE:</label>
-                                    <input type="number" min="0" max="10" step="1">
+                                    <input type="number" disabled value="1">
                                 </div>
                             </div>
                         </div>
@@ -177,7 +178,7 @@
         </div>
         <div class="session-section">
             <div class="session-title">
-                <p>PARTIDO DE ENTRENAMIENTO VS ATLETICO DE JAGEIRO</p>
+                <p>@Model.Nombre</p>
             </div>
             <div class="session-site">
                 <div class="session-buttons">
