@@ -1,4 +1,16 @@
-﻿window.onload = function () {
+﻿function vuelveInicio() {
+    window.location.href = "/equipos/MenuEquipo";
+}
+
+function cargaGrafica(etiquetas, valores) {
+
+    console.log(etiquetas);
+    var data = [];
+
+    for (var i = 0; i < etiquetas.length; i++) {
+        data.push([etiquetas[i],valores[i]]);
+    }
+
     Highcharts.chart("graf-player", {
         chart: {
             backgroundColor: "transparent",
@@ -15,7 +27,7 @@
                 fontSize: '25px',
                 'padding': '10px 50% 10px 50%',
                 'background-color': '#000000',
-                'text-align':"center"
+                'text-align': "center"
             }
         },
         plotOptions: {
@@ -39,21 +51,10 @@
             type: 'pie',
             name: 'Valoracion',
             innerSize: '40%',
-            data: [
-                ['Tiro', 3],
-                ['Pase', 1],
-                ['Regate', 1],
-                ['Defensa', 2],
-                ['Ritmo', 2],
-                ['Fisico',5]
-            ]
+            data: data
         }],
     });
 
     $("text.highcharts-credits").hide();
-}
-
-function vuelveInicio() {
-    window.location.href = "/equipos/MenuEquipo";
 }
 

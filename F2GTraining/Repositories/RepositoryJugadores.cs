@@ -28,6 +28,9 @@ GO
 
 CREATE OR ALTER PROCEDURE SP_DELETE_JUGADOR_ID (@IDJUGADOR INT)
 AS
+	DELETE FROM JUGADORES_ENTRENAMIENTO
+	WHERE IDJUGADOR = @IDJUGADOR
+
 	DELETE FROM ESTADISTICAS
 	WHERE IDJUGADOR = @IDJUGADOR
 
@@ -97,6 +100,11 @@ namespace F2GTraining.Repositories
 
         }
 
+        public EstadisticaJugador GetEstadisticasJugador(int id)
+        {
+            return this.context.EstadisticasJugadores.Where(x => x.IdJugador == id).FirstOrDefault();
+        }
+
         public List<Jugador> GetJugadoresEquipo(int idequipo)
         {
             string sql = "SP_FIND_JUGADORES_IDEQUIPO @IDEQUIPO";
@@ -115,7 +123,6 @@ namespace F2GTraining.Repositories
 
         }
 
-        //OPTIMIZAR METODO (INTENTAR CON VISTA, Y PREGUNTAR LO DEL MODELO)
         public List<Jugador> JugadoresXUsuario(int idusuario)
         {
             List<Equipo> equipos = this.repoEqu.GetEquiposUser(idusuario);
@@ -160,14 +167,119 @@ namespace F2GTraining.Repositories
                 JugadorEntrenamiento jugador =
                     this.context.JugadoresEntrenamiento.Where(x => x.IdJugador == id && x.IdEntrenamiento == identrenamiento).First();
 
-                jugador.RitmoGKSalto = valoraciones[contadorPuntuacion];
-                jugador.TiroGKParada = valoraciones[contadorPuntuacion + 1];
-                jugador.PaseGKSaque = valoraciones[contadorPuntuacion + 2];
-                jugador.RegateGKReflejo = valoraciones[contadorPuntuacion + 3];
-                jugador.DefensaGKVelocidad = valoraciones[contadorPuntuacion + 4];
-                jugador.FisicoGKPosicion = valoraciones[contadorPuntuacion + 5];
-                jugador.Finalizado = true;
+                EstadisticaJugador estadisticas =
+                    this.context.EstadisticasJugadores.Where(x => x.IdJugador == id).First();
 
+                int ritmosalto = valoraciones[contadorPuntuacion];
+                int tiroparada = valoraciones[contadorPuntuacion + 1];
+                int pasesaque = valoraciones[contadorPuntuacion + 2];
+                int regatereflejo = valoraciones[contadorPuntuacion + 3];
+                int defensavelocidad = valoraciones[contadorPuntuacion + 4];
+                int fisicoposicion = valoraciones[contadorPuntuacion + 5];
+
+                jugador.RitmoGKSalto = ritmosalto;
+                
+                if (ritmosalto != 0)
+                {
+                    if (estadisticas.RitmoGKSalto == null && estadisticas.TotalRitmoGKSalto == null)
+                    {
+                        estadisticas.RitmoGKSalto = ritmosalto;
+                        estadisticas.TotalRitmoGKSalto = 1;
+                    }
+                    else
+                    {
+                        estadisticas.RitmoGKSalto = estadisticas.RitmoGKSalto + ritmosalto;
+                        estadisticas.TotalRitmoGKSalto++;
+                    }
+                    
+                }
+
+                jugador.TiroGKParada = tiroparada;
+
+                if (tiroparada != 0)
+                {
+                    if (estadisticas.TiroGKParada == null && estadisticas.TotalTiroGKParada == null)
+                    {
+                        estadisticas.TiroGKParada = tiroparada;
+                        estadisticas.TotalTiroGKParada = 1;
+                    }
+                    else
+                    {
+                        estadisticas.TiroGKParada = estadisticas.TiroGKParada + tiroparada;
+                        estadisticas.TotalTiroGKParada++;
+                    }
+                    
+                }
+
+                jugador.PaseGKSaque = pasesaque;
+
+                if (pasesaque != 0)
+                {
+                    if (estadisticas.PaseGKSaque == null && estadisticas.TotalPaseGKSaque == null)
+                    {
+                        estadisticas.PaseGKSaque = pasesaque;
+                        estadisticas.TotalPaseGKSaque = 1;
+                    }
+                    else
+                    {
+                        estadisticas.PaseGKSaque = estadisticas.PaseGKSaque + pasesaque;
+                        estadisticas.TotalPaseGKSaque++;
+                    }
+                    
+                }
+
+                jugador.RegateGKReflejo = regatereflejo;
+
+                if (regatereflejo != 0)
+                {
+                    if (estadisticas.RegateGKReflejo == null && estadisticas.TotalRegateGKReflejo == null)
+                    {
+                        estadisticas.RegateGKReflejo = regatereflejo;
+                        estadisticas.TotalRegateGKReflejo = 1;
+                    }
+                    else
+                    {
+                        estadisticas.RegateGKReflejo = estadisticas.RegateGKReflejo + regatereflejo;
+                        estadisticas.TotalRegateGKReflejo++;
+                    }
+                    
+                }
+
+                jugador.DefensaGKVelocidad = defensavelocidad;
+
+                if (defensavelocidad != 0)
+                {
+                    if (estadisticas.DefensaGKVelocidad == null && estadisticas.TotalDefensaGKVelocidad == null)
+                    {
+                        estadisticas.DefensaGKVelocidad = defensavelocidad;
+                        estadisticas.TotalDefensaGKVelocidad = 1;
+                    }
+                    else
+                    {
+                        estadisticas.DefensaGKVelocidad = estadisticas.DefensaGKVelocidad + defensavelocidad;
+                        estadisticas.TotalDefensaGKVelocidad++;
+                    }
+
+                }
+
+                jugador.FisicoGKPosicion = fisicoposicion;
+
+                if (fisicoposicion != 0)
+                {
+                    if (estadisticas.FisicoGKPosicion == null && estadisticas.TotalFisicoGKPosicion == null)
+                    {
+                        estadisticas.FisicoGKPosicion = fisicoposicion;
+                        estadisticas.TotalFisicoGKPosicion = 1;
+                    }
+                    else
+                    {
+                        estadisticas.FisicoGKPosicion = estadisticas.FisicoGKPosicion + fisicoposicion;
+                        estadisticas.TotalFisicoGKPosicion++;
+                    }
+                    
+                }
+
+                jugador.Finalizado = true;
                 contadorPuntuacion += 6;
             }
 
@@ -212,5 +324,9 @@ namespace F2GTraining.Repositories
             await this.context.SaveChangesAsync();
         }
 
+        public List<JugadorEntrenamiento> GetNotasSesion(int identrenamiento)
+        {
+            return this.context.JugadoresEntrenamiento.Where(x => x.IdEntrenamiento == identrenamiento).ToList();
+        }
     }
 }

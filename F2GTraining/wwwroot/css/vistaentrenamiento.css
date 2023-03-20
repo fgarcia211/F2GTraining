@@ -91,9 +91,19 @@
     text-align: center;
 }
 
-.session-info-view .player-section .player-site .player-stats .triple-input .input-zone input{
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone select{
+    width: 40px;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone input:disabled {
+    width: 35px;
+    border: 1px solid white;
+    background: linear-gradient(0deg, rgba(47,42,36,1) 0%, rgba(224,201,139,1) 100%);
+    color: white;
+    text-align: center;
     text-indent: 5px;
 }
+
 
 .session-info-view .session-section {
     width: 45%;
@@ -175,6 +185,26 @@
     border: 1px solid white;
 }
 
+.swal2-popup {
+    border: 6px solid #45BAC1 !important;
+    background-color: black !important;
+    color: white !important;
+}
+
+.swal2-confirm {
+    background-color: #45BAC1 !important;
+    border: 2px solid white !important;
+    width: 100%;
+}
+
+.swal2-container {
+    height: 810px !important;
+}
+
+.swal2-actions {
+    border: none !important;
+}
+
 @media (max-width: 1030px){
 
     .session-info-view {
@@ -199,4 +229,16 @@
         font-size: 78px;
     }
 
+    .swal2-popup {
+        width: 90% !important;
+    }
+
 }
+
+@media (max-width: 500px) {
+
+    .session-info-view .player-section .player-site .player-stats .triple-input {
+        font-size: 10px;
+    }
+}
+

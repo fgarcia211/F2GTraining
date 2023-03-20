@@ -11,6 +11,29 @@
     
 }
 
+function compruebaJugadores() {
+
+    var jugadoresSeleccionados = false;
+
+    $("[name='seleccionados']").each(function () {
+        if (this.checked) {
+            jugadoresSeleccionados = true;
+        }
+    });
+
+    if (jugadoresSeleccionados) {
+        $("form")[0].submit();
+    } else {
+        $($(".session-info-view")[0]).hide()
+        Swal.fire({
+            title: 'Ha ocurrido un error',
+            html: 'No se han seleccionado jugadores',
+        }).then((result) => {
+            $($(".session-info-view")[0]).show()
+        })
+    }
+}
+
 function calculaTemporizador(tiempo) {
 
     var horas = Math.trunc(tiempo / 3600);

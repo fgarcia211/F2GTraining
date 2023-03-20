@@ -108,6 +108,8 @@ namespace F2GTraining.Controllers
             else if (entrena.Activo == false && entrena.FechaFin != null)
             {
                 jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                List<JugadorEntrenamiento> notas = this.repoJug.GetNotasSesion(identrenamiento);
+                ViewData["NOTAS"] = notas;
             }
             else
             {
@@ -139,7 +141,8 @@ namespace F2GTraining.Controllers
             }
 
             Entrenamiento entrena = this.repoEnt.GetEntrenamiento(identrenamiento);
-            
+            List<Jugador> jugadoresequipo;
+
             if (entrena.Activo == false)
             {
                 //AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
@@ -147,18 +150,19 @@ namespace F2GTraining.Controllers
                 //AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
                 await this.repoEnt.EmpezarEntrenamiento(identrenamiento);
 
-                List<Jugador> jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
             }
             else 
             {
-                List<Jugador> jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
                 //AQUI HAY QUE HACER PROCEDURE PARA ASIGNAR NOTAS A CADA JUGADOR APUNTADO
-
+                await this.repoJug.AniadirPuntuacionesEntrenamiento(seleccionados, valoraciones, identrenamiento);
                 //AQUI VA EL CODIGO PARA QUE LA SESION SE ACABE
                 await this.repoEnt.FinalizarEntrenamiento(identrenamiento);
-            }
 
-            
+                List<JugadorEntrenamiento> notas = this.repoJug.GetNotasSesion(identrenamiento);
+                ViewData["NOTAS"] = notas;
+            }
 
             ViewData["JUGADORES"] = jugadoresequipo;
             ViewData["IDEQUIPO"] = idequipo;

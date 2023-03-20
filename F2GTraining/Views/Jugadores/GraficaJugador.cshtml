@@ -2,6 +2,43 @@
 
 @{
     Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+    EstadisticaJugador stats = ViewData["ESTADISTICAS"] as EstadisticaJugador;
+
+    List<string> etiquetas = new List<string>();
+    List<int> valores = new List<int>();
+
+    int tiroparada = (stats.TiroGKParada != null && stats.TotalTiroGKParada != null) ? stats.TiroGKParada.Value / stats.TotalTiroGKParada.Value : 0;
+    int pasesaque = (stats.PaseGKSaque != null && stats.TotalPaseGKSaque != null) ? stats.PaseGKSaque.Value / stats.TotalPaseGKSaque.Value : 0;
+    int regatereflejo = (stats.RegateGKReflejo != null && stats.TotalRegateGKReflejo != null) ? stats.RegateGKReflejo.Value / stats.TotalRegateGKReflejo.Value : 0;
+    int defensavelocidad = (stats.DefensaGKVelocidad != null && stats.TotalDefensaGKVelocidad != null) ? stats.DefensaGKVelocidad.Value / stats.TotalDefensaGKVelocidad.Value : 0;
+    int ritmosalto = (stats.RitmoGKSalto != null && stats.TotalRitmoGKSalto != null) ? stats.RitmoGKSalto.Value / stats.TotalRitmoGKSalto.Value : 0;
+    int fisicoposicion = (stats.FisicoGKPosicion != null && stats.TotalFisicoGKPosicion != null) ? stats.FisicoGKPosicion.Value / stats.TotalFisicoGKPosicion.Value : 0;
+
+    valores.Add(ritmosalto);
+    valores.Add(tiroparada);
+    valores.Add(pasesaque);
+    valores.Add(regatereflejo);
+    valores.Add(defensavelocidad);
+    valores.Add(fisicoposicion);
+
+    if (Model.IdPosicion != 1)
+    {
+        etiquetas.Add("Ritmo");
+        etiquetas.Add("Tiro");
+        etiquetas.Add("Pase");
+        etiquetas.Add("Regate");
+        etiquetas.Add("Defensa");
+        etiquetas.Add("Fisico");
+    }
+    else
+    {
+        etiquetas.Add("Salto");
+        etiquetas.Add("Parada");
+        etiquetas.Add("Saque");
+        etiquetas.Add("Reflejos");
+        etiquetas.Add("Reaccion");
+        etiquetas.Add("Posicion");
+    }
 }
 
 @section CSSLinks{
@@ -18,6 +55,14 @@
 @section Scripts{
     <script src="~/js/highcharts.js"></script>
     <script src="~/js/graficajugador.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            var jsonEtiquetas = '@Json.Serialize(etiquetas)';
+            var jsonValores = '@Json.Serialize(valores)';
+
+            cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
+        });
+    </script>
 }
 
 <div class="graphic-all-zone">
@@ -67,16 +112,40 @@
         <h2>PUNTUACION DE ESTADISTICAS</h2>
         <div class="stats-info">
             <div class="double-info">
-                <label>TIRO: 0</label>
-                <label>PASE: 0</label>
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>PARADA: @tiroparada</label>
+                    <label>SAQUE: @pasesaque</label>
+                }
+                else
+                {
+                    <label>TIRO: @tiroparada</label>
+                    <label>PASE: @pasesaque</label>
+                }
             </div>
             <div class="double-info">
-                <label>REGATE: 0</label>
-                <label>DEFENSA: 0</label>
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>REFLEJOS: @regatereflejo</label>
+                    <label>REACCION: @defensavelocidad</label>
+                }
+                else
+                {
+                    <label>REGATE: @regatereflejo</label>
+                    <label>DEFENSA: @defensavelocidad</label>
+                }
             </div>
             <div class="double-info">
-                <label>RITMO: 0</label>
-                <label>FISICO: 0</label>
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>SALTO: @ritmosalto</label>
+                    <label>POSICION: @fisicoposicion</label>
+                }
+                else
+                {
+                    <label>RITMO: @ritmosalto</label>
+                    <label>FISICO: @fisicoposicion</label>
+                }
             </div>
         </div>
         <button onclick="alert('Proximamente')">DESCARGAR INFORME</button>

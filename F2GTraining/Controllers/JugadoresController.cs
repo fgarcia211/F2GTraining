@@ -102,6 +102,8 @@ namespace F2GTraining.Controllers
 
                 if (jugadoresUser.Contains(jugMostrar))
                 {
+                    EstadisticaJugador stats = this.repoJug.GetEstadisticasJugador(idjugador);
+                    ViewData["ESTADISTICAS"] = stats;
                     return View(jugMostrar);
                 }
 

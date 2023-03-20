@@ -3,6 +3,7 @@
 @{
     Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
     List<Jugador> jugadores;
+    List<JugadorEntrenamiento> notas;
 
     if (ViewData["JUGADORES"] != null)
     {
@@ -13,10 +14,20 @@
         jugadores = new List<Jugador>();
     }
 
+    if (ViewData["NOTAS"] != null)
+    {
+        notas = ViewData["NOTAS"] as List<JugadorEntrenamiento>;
+    }
+    else
+    {
+        notas = new List<JugadorEntrenamiento>();
+    }
+
 }
 
 @section CSSLinks{
     <link rel="stylesheet" href="~/css/vistaentrenamiento.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true" />
 }
 
 @section ZonaLogueo{
@@ -27,6 +38,7 @@
 }
 
 @section Scripts{
+    <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/vistaentrenamiento.js" asp-append-version="true"></script>
 
     @if (Model.Activo)
@@ -106,68 +118,182 @@
                         <div class="player-stats">
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>RITMO:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>RITMO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SALTO:</label>
+                                    }                                   
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="input-zone">
-                                    <label>TIRO:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>TIRO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>PARADA:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i = 0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="input-zone">
-                                    <label>PASE:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>PASE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SAQUE:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>REGATE:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>REGATE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REFLEJOS:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="input-zone">
-                                    <label>DEFENSA:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>DEFENSA:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REACCION</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i = 0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="input-zone">
-                                    <label>FISICO:</label>
-                                    <input type="number" name="valoraciones" min="0" max="10" step="1" value="0">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>FISICO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>POSICION</label>
+                                    }  
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     }
                 }else if(!(Model.Activo) && Model.FechaFin != null)
                 {
-                    @foreach (Jugador jug in jugadores)
+                    @for (int i=0; i < jugadores.Count; i++)
                     {
                         <div class="player-started">
-                            <p>@jug.Nombre.ToUpper()</p>
+                            <p>@jugadores[i].Nombre.ToUpper()</p>
                         </div>
                         <div class="player-stats">
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>TIRO:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>RITMO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SALTO:</label>
+                                    }
+                                    <input type="number" value="@notas[i].RitmoGKSalto.Value" disabled>
                                 </div>
                                 <div class="input-zone">
-                                    <label>RITMO:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>TIRO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>PARADA:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].TiroGKParada.Value">
                                 </div>
                                 <div class="input-zone">
-                                    <label>DEFENSA:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>PASE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SAQUE:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].PaseGKSaque.Value">
                                 </div>
                             </div>
                             <div class="triple-input">
                                 <div class="input-zone">
-                                    <label>PASE:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>REGATE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REFLEJOS:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].RegateGKReflejo.Value">
                                 </div>
                                 <div class="input-zone">
-                                    <label>FISICO:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>DEFENSA:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REACCION:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].DefensaGKVelocidad.Value">
                                 </div>
                                 <div class="input-zone">
-                                    <label>REGATE:</label>
-                                    <input type="number" disabled value="1">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>FISICO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>POSICION:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].FisicoGKPosicion.Value">
                                 </div>
                             </div>
                         </div>
@@ -188,7 +314,7 @@
                     }
                     else if (!(Model.Activo) && Model.FechaInicio == null)
                     {
-                        <button type="submit">INICIAR SESION</button>
+                        <button type="button" onclick="compruebaJugadores()">INICIAR SESION</button>
                     }
                     <button type="button" onclick="location.href='@Url.Action("ListaSesiones", "Entrenamientos", new { idequipo = ViewData["IDEQUIPO"]})'">VOLVER A SESIONES</button>
                 </div>
@@ -199,7 +325,7 @@
                     }
                     else if (Model.Activo && Model.FechaFin == null)
                     {
-                        <p>Asigna las notas a cada jugador (Un 0, o no introducir nada no contará para las estadísticas) y pulsa en "FINALIZAR SESION"</p>
+                        <p>Asigna las notas a cada jugador (Un 0 no contará para las estadísticas) y pulsa en "FINALIZAR SESION"</p>
                     }
                     else if (!(Model.Activo) && Model.FechaFin != null)
                     {
