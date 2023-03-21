@@ -55,14 +55,17 @@
 @section Scripts{
     <script src="~/js/highcharts.js"></script>
     <script src="~/js/graficajugador.js" asp-append-version="true"></script>
-    <script>
-        $(function () {
-            var jsonEtiquetas = '@Json.Serialize(etiquetas)';
-            var jsonValores = '@Json.Serialize(valores)';
+    @if (tiroparada != 0 && ritmosalto != 0 && pasesaque != 0 && regatereflejo != 0 && defensavelocidad != 0 && fisicoposicion != 0)
+    {
+        <script>
+            $(function () {
+                var jsonEtiquetas = '@Json.Serialize(etiquetas)';
+                var jsonValores = '@Json.Serialize(valores)';
 
-            cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
-        });
-    </script>
+                cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
+            });
+        </script>
+    }
 }
 
 <div class="graphic-all-zone">
@@ -93,7 +96,7 @@
             <div class="double-info">
                 @if (Model.Peso != 0)
                 {
-                    <label>PESO: @Model.Peso</label>
+                    <label>PESO: @Model.Peso KG</label>
                 }
                 else
                 {
@@ -101,7 +104,7 @@
                 }
                 @if (Model.Altura != 0)
                 {
-                    <label>ALTURA: @Model.Altura</label>
+                    <label>ALTURA: @Model.Altura CM</label>
                 }
                 else
                 {

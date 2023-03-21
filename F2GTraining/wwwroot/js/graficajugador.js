@@ -4,11 +4,20 @@
 
 function cargaGrafica(etiquetas, valores) {
 
-    console.log(etiquetas);
+    var texto = "GRAFICA DEL JUGADOR";
+    var statsamostrar = 6;
     var data = [];
 
     for (var i = 0; i < etiquetas.length; i++) {
-        data.push([etiquetas[i],valores[i]]);
+        if (valores[i] != 0) {
+            data.push([etiquetas[i], valores[i]]);
+        } else {
+            statsamostrar--;
+        }
+    }
+
+    if (statsamostrar == 0) {
+        texto = "NO HAY DATOS DISPONIBLES"
     }
 
     Highcharts.chart("graf-player", {
@@ -19,7 +28,7 @@ function cargaGrafica(etiquetas, valores) {
         },
         title: {
             useHTML: true,
-            text: 'GRAFICA DEL JUGADOR',
+            text: texto,
             y: 60,
             style: {
                 fontWeight: 'bold',

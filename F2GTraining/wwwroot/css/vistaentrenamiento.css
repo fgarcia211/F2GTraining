@@ -233,6 +233,10 @@
         width: 90% !important;
     }
 
+    .swal2-container {
+        height: 1450px !important;
+    }
+
 }
 
 @media (max-width: 500px) {
