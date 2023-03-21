@@ -60,14 +60,10 @@
     width: 70%;
 }
 
-.team-section div.image-team {
-    display: none;
-}
-
 .team-section div.link-team-actions {
     width: 96%;
     padding: 0px 2% 0px 2%;
-    display: none;
+    display: grid;
 }
 
 .team-section div.link-team-actions a.minibutton-teamview {
@@ -132,7 +128,6 @@
     text-align: center;
     padding: 10px 0px 10px 0px;
     cursor: pointer;
-    display: none;
 }
 
 .teamview-menu .player-section .player-zone div div.player:hover{

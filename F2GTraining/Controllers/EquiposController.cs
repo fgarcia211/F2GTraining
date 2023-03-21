@@ -42,6 +42,11 @@ namespace F2GTraining.Controllers
 
         }
 
+        public IActionResult _PartialVistaEquipo(int idequipo)
+        {
+            return PartialView(this.repoEqu.GetEquipo(idequipo));
+        }
+
         public IActionResult CrearEquipo()
         {
 

@@ -110,5 +110,10 @@ namespace F2GTraining.Controllers
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
         }
+
+        public IActionResult _PartialJugadoresEquipo(int idequipo)
+        {
+            return PartialView(this.repoJug.GetJugadoresEquipo(idequipo));
+        }
     }
 }

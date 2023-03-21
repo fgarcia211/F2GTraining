@@ -55,17 +55,16 @@
 @section Scripts{
     <script src="~/js/highcharts.js"></script>
     <script src="~/js/graficajugador.js" asp-append-version="true"></script>
-    @if (tiroparada != 0 && ritmosalto != 0 && pasesaque != 0 && regatereflejo != 0 && defensavelocidad != 0 && fisicoposicion != 0)
-    {
-        <script>
-            $(function () {
-                var jsonEtiquetas = '@Json.Serialize(etiquetas)';
-                var jsonValores = '@Json.Serialize(valores)';
 
-                cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
-            });
-        </script>
-    }
+    <script>
+        $(function() {
+            var jsonEtiquetas = '@Json.Serialize(etiquetas)';
+            var jsonValores = '@Json.Serialize(valores)';
+
+            cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
+        });
+    </script>
+
 }
 
 <div class="graphic-all-zone">

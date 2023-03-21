@@ -7,35 +7,11 @@ function esconderEquipos() {
 
     var equipoSelecc = $("#selectorequipo").val()
 
-    var divisoresImagen = $(".image-team");
+    var requestEquipo = "/Equipos/_PartialVistaEquipo?idequipo=" + equipoSelecc;
+    $("#datosequipo").load(requestEquipo);
 
-    for (var i = 0; i < divisoresImagen.length; i++) {
-        $(divisoresImagen[i]).hide()
-    }
+    var requestJugadores = "/Jugadores/_PartialJugadoresEquipo?idequipo=" + equipoSelecc;
+    $("#datosjugadores").load(requestJugadores);
 
-    var divisoresEquipo = $(".link-team-actions");
-
-    for (var i = 0; i < divisoresEquipo.length; i++) {
-        $(divisoresEquipo[i]).hide()
-    }
-
-    $("#teamimage-" + equipoSelecc).show();
-    $("#teamaction-" + equipoSelecc).css("display","grid");
-
-    cambiarJugadores(equipoSelecc, $("#equiposeleccionado").val());
     $("#equiposeleccionado").val(equipoSelecc);
-}
-
-function cambiarJugadores(idequiponuevo, idequipoviejo) {
-
-    console.log(idequiponuevo, idequipoviejo);
-
-    var divisoresOpcionesJug = $(".options-player");
-
-    for (var i = 0; i < divisoresOpcionesJug.length; i++) {
-        $(divisoresOpcionesJug[i]).hide()
-    }
-
-    $("[data-idequipo='" + idequipoviejo + "']").hide();
-    $("[data-idequipo='" + idequiponuevo + "']").show();
 }

@@ -24,7 +24,7 @@
                 + separatedRoute[separatedRoute.Count() - 2] + "/" 
                 + separatedRoute[separatedRoute.Count() - 1];
 
-            return routeFileRoot;
+            return fileName;
         }
     }
 }
