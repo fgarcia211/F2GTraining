@@ -1,6 +1,7 @@
 using F2GTraining.Data;
 using F2GTraining.Helpers;
 using F2GTraining.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromHours(12);
 });
 
+//BASE DE DATOS
 string connectionString = builder.Configuration.GetConnectionString("databaseF2GClase");
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<HelperRutasProvider>();
@@ -22,7 +24,20 @@ builder.Services.AddTransient<RepositoryEquipos>();
 builder.Services.AddTransient<RepositoryEntrenamientos>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddControllersWithViews();
+//SEGURIDAD
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultSignInScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
+
+//RUTAS DE VALIDACION PROPIAS
+builder.Services.AddControllersWithViews
+    (options => options.EnableEndpointRouting = false);
 
 var app = builder.Build();
 
@@ -31,11 +46,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Usuarios}/{action=InicioSesion}");
+app.UseMvc(routes =>
+{
+    routes.MapRoute(
+        name: "default",
+        template: "{controller=Usuarios}/{action=InicioSesion}"
+    );
+});
 
 app.Run();

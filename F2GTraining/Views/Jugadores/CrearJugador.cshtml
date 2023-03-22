@@ -10,7 +10,7 @@
 
 @section ZonaLogueo{
     <div class="user-section">
-        <p>@user.Nombre</p>
+        <p>@Context.User.Identity.Name</p>
         <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
     </div>
 }

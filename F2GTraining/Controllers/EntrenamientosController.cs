@@ -1,4 +1,5 @@
 ﻿using F2GTraining.Extensions;
+using F2GTraining.Filters;
 using F2GTraining.Models;
 using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -18,82 +19,69 @@ namespace F2GTraining.Controllers
             this.repoJug = repo3;
         }
 
+        [AuthorizeUsers]
         public IActionResult ListaSesiones(int idequipo)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
             Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
+            else
+            {
+                ViewData["IDEQUIPO"] = idequipo;
+                ViewData["NOMBREEQUIPO"] = equipo.Nombre;
+                return View(this.repoEnt.GetEntrenamientosEquipo(idequipo));
+            }
 
-            ViewData["IDEQUIPO"] = idequipo;
-            ViewData["NOMBREEQUIPO"] = equipo.Nombre;
-
-            return View(this.repoEnt.GetEntrenamientosEquipo(idequipo));
-            
         }
 
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> ListaSesiones(int idequipo, string nombre)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
             Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
+            else
+            {
+                await this.repoEnt.InsertEntrenamiento(idequipo, nombre);
+                return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
+            }
 
-            await this.repoEnt.InsertEntrenamiento(idequipo, nombre);
-            return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
         }
 
+        [AuthorizeUsers]
         public async Task<IActionResult> EliminaEntrenamiento(int identrenamiento, int idequipo)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
             Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
-
-            await this.repoEnt.BorrarEntrenamiento(identrenamiento);
-            return RedirectToAction("ListaSesiones",new {idequipo = idequipo});
-        }
-
-        public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo)
-        {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
+            else
             {
-                return RedirectToAction("InicioSesion", "Usuarios");
+                await this.repoEnt.BorrarEntrenamiento(identrenamiento);
+                return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
             }
 
+        }
+
+        [AuthorizeUsers]
+        public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo)
+        {
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
             Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
@@ -123,19 +111,14 @@ namespace F2GTraining.Controllers
             return View(entrena);
         }
 
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> VistaEntrenamiento(int identrenamiento, int idequipo, List<int> seleccionados, List<int> valoraciones)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
             Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-            if (equipo == null || equipo.IdUsuario != user.IdUsuario)
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }

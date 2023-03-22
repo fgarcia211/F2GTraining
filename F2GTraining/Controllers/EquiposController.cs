@@ -1,4 +1,5 @@
 ﻿using F2GTraining.Extensions;
+using F2GTraining.Filters;
 using F2GTraining.Helpers;
 using F2GTraining.Models;
 using F2GTraining.Repositories;
@@ -19,16 +20,12 @@ namespace F2GTraining.Controllers
             this.helperArchivos = helperPath;
         }
 
+        [AuthorizeUsers]
         public IActionResult MenuEquipo()
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
 
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
-            List<Equipo> equipos = this.repoEqu.GetEquiposUser(user.IdUsuario);
+            List<Equipo> equipos = this.repoEqu.GetEquiposUser(idusuario);
 
             if (equipos.Count == 0)
             {
@@ -36,46 +33,36 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                ViewData["JUGADORESUSUARIO"] = this.repoJug.JugadoresXUsuario(user.IdUsuario);
+                ViewData["JUGADORESUSUARIO"] = this.repoJug.JugadoresXUsuario(idusuario);
                 return View(equipos);
             }
 
         }
 
+        [AuthorizeUsers]
         public IActionResult _PartialVistaEquipo(int idequipo)
         {
             return PartialView(this.repoEqu.GetEquipo(idequipo));
         }
 
+        [AuthorizeUsers]
         public IActionResult CrearEquipo()
         {
-
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
-
             return View();
         }
 
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> CrearEquipo(string nombre, IFormFile imagen)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
-
-            if (user == null)
-            {
-                return RedirectToAction("InicioSesion", "Usuarios");
-            }
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
 
             string extension = System.IO.Path.GetExtension(imagen.FileName);
 
             if (extension == ".png")
             {
                 string path = await this.helperArchivos.UploadFileAsync(imagen, nombre.ToLower());
-                await this.repoEqu.InsertEquipo(user.IdUsuario, nombre, path);
+                await this.repoEqu.InsertEquipo(idusuario, nombre, path);
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else

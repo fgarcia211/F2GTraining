@@ -1,4 +1,5 @@
 ﻿using F2GTraining.Extensions;
+using F2GTraining.Filters;
 using F2GTraining.Models;
 using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -16,101 +17,79 @@ namespace F2GTraining.Controllers
             this.repoEqu = repo2;
         }
 
+        [AuthorizeUsers]
         public IActionResult CrearJugador(int idequipo)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
 
-            if (user == null)
+            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+
+            if (equipo == null || equipo.IdUsuario != idusuario)
             {
-                return RedirectToAction("InicioSesion", "Usuarios");
+                return RedirectToAction("MenuEquipo", "Equipos");
             }
             else
             {
-                Equipo equipo = this.repoEqu.GetEquipo(idequipo);
-
-                if (equipo == null || equipo.IdUsuario != user.IdUsuario)
-                {
-                    return RedirectToAction("MenuEquipo", "Equipos");
-                }
-                else
-                {
-                    ViewData["IDEQUIPO"] = equipo.IdEquipo;
-                    ViewData["NOMBRE"] = equipo.Nombre;
-                    return View(this.repoJug.GetPosiciones());
-                }
+                ViewData["IDEQUIPO"] = equipo.IdEquipo;
+                ViewData["NOMBRE"] = equipo.Nombre;
+                return View(this.repoJug.GetPosiciones());
             }
-            
+
         }
 
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> CrearJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, int peso, int altura)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
 
-            if (user == null)
+            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+
+            if (equipo != null || equipo.IdUsuario == idusuario)
             {
-                return RedirectToAction("InicioSesion", "Usuarios");
+                await this.repoJug.InsertJugador(idequipo, idposicion, nombre, dorsal, edad, peso, altura);
             }
-            else
-            {
-                Equipo equipo = this.repoEqu.GetEquipo(idequipo);
 
-                if (equipo != null || equipo.IdUsuario == user.IdUsuario)
-                {
-                    await this.repoJug.InsertJugador(idequipo, idposicion, nombre, dorsal, edad, peso, altura);
-                }
-
-                return RedirectToAction("MenuEquipo", "Equipos");
-            }
+            return RedirectToAction("MenuEquipo", "Equipos");
 
         }
 
+        [AuthorizeUsers]
         public async Task<IActionResult> DeleteJugador(int idjugador)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(idusuario);
 
-            if (user == null)
+            if (jugadoresUser.Contains(this.repoJug.GetJugadorID(idjugador)))
             {
-                return RedirectToAction("InicioSesion", "Usuarios");
+                await this.repoJug.DeleteJugador(idjugador);
             }
-            else
-            {
-                List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(user.IdUsuario);
-                
-                if (jugadoresUser.Contains(this.repoJug.GetJugadorID(idjugador))){
 
-                    await this.repoJug.DeleteJugador(idjugador);
+            return RedirectToAction("MenuEquipo", "Equipos");
 
-                }
-                
-                return RedirectToAction("MenuEquipo", "Equipos");
-            }
         }
 
+        [AuthorizeUsers]
         public IActionResult GraficaJugador(int idjugador)
         {
-            Usuario user = HttpContext.Session.GetObject<Usuario>("USUARIO");
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(idusuario);
+            Jugador jugMostrar = this.repoJug.GetJugadorID(idjugador);
 
-            if (user == null)
+            if (jugadoresUser.Contains(jugMostrar))
             {
-                return RedirectToAction("InicioSesion", "Usuarios");
+                EstadisticaJugador stats = this.repoJug.GetEstadisticasJugador(idjugador);
+                ViewData["ESTADISTICAS"] = stats;
+                return View(jugMostrar);
             }
             else
             {
-                List<Jugador> jugadoresUser = this.repoJug.JugadoresXUsuario(user.IdUsuario);
-                Jugador jugMostrar = this.repoJug.GetJugadorID(idjugador);
-
-                if (jugadoresUser.Contains(jugMostrar))
-                {
-                    EstadisticaJugador stats = this.repoJug.GetEstadisticasJugador(idjugador);
-                    ViewData["ESTADISTICAS"] = stats;
-                    return View(jugMostrar);
-                }
-
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
+
         }
 
+        [AuthorizeUsers]
         public IActionResult _PartialJugadoresEquipo(int idequipo)
         {
             return PartialView(this.repoJug.GetJugadoresEquipo(idequipo));

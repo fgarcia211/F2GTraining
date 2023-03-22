@@ -1,7 +1,11 @@
 ﻿using F2GTraining.Extensions;
+using F2GTraining.Filters;
 using F2GTraining.Models;
 using F2GTraining.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace F2GTraining.Controllers
 {
@@ -25,14 +29,31 @@ namespace F2GTraining.Controllers
         }
 
         [HttpPost]
-        public IActionResult InicioSesion(string usuario, string contrasenha)
+        public async Task<IActionResult> InicioSesion(string usuario, string contrasenha)
         {
             Usuario user = this.repo.GetUsuarioNamePass(usuario, contrasenha);
             
             if (user != null)
             {
-                //guardar en sesion el usuario
-                HttpContext.Session.SetObject("USUARIO", user);
+                ClaimsIdentity identity = new ClaimsIdentity
+                (CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+
+                Claim claimName = new Claim(ClaimTypes.Name, user.Nombre);
+                identity.AddClaim(claimName);
+
+                Claim claimId = new Claim("IDUSUARIO", user.IdUsuario.ToString());
+                identity.AddClaim(claimId);
+
+                ClaimsPrincipal userPrincipal =
+                    new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync
+                    (CookieAuthenticationDefaults.AuthenticationScheme
+                    , userPrincipal, new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTime.Now.AddHours(12)
+                    });
+
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else
@@ -88,9 +109,11 @@ namespace F2GTraining.Controllers
             }
         }
 
-        public IActionResult CerrarSesion()
+        [AuthorizeUsers]
+        public async Task<IActionResult> CerrarSesion()
         {
             HttpContext.Session.Remove("USUARIO");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("InicioSesion");
         }
 
