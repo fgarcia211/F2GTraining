@@ -8,22 +8,18 @@ namespace F2GTraining.Controllers
 {
     public class EntrenamientosController : Controller
     {
-        private RepositoryEntrenamientos repoEnt;
-        private RepositoryEquipos repoEqu;
-        private RepositoryJugadores repoJug;
+        private IRepositoryF2GTraining repo;
 
-        public EntrenamientosController(RepositoryEquipos repo, RepositoryEntrenamientos repo2, RepositoryJugadores repo3)
+        public EntrenamientosController(IRepositoryF2GTraining repo)
         {
-            this.repoEqu = repo;
-            this.repoEnt = repo2;
-            this.repoJug = repo3;
+            this.repo = repo;
         }
 
         [AuthorizeUsers]
         public IActionResult ListaSesiones(int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+            Equipo equipo = this.repo.GetEquipo(idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -33,7 +29,7 @@ namespace F2GTraining.Controllers
             {
                 ViewData["IDEQUIPO"] = idequipo;
                 ViewData["NOMBREEQUIPO"] = equipo.Nombre;
-                return View(this.repoEnt.GetEntrenamientosEquipo(idequipo));
+                return View(this.repo.GetEntrenamientosEquipo(idequipo));
             }
 
         }
@@ -43,7 +39,7 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> ListaSesiones(int idequipo, string nombre)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+            Equipo equipo = this.repo.GetEquipo(idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -51,7 +47,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                await this.repoEnt.InsertEntrenamiento(idequipo, nombre);
+                await this.repo.InsertEntrenamiento(idequipo, nombre);
                 return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
             }
 
@@ -61,7 +57,7 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> EliminaEntrenamiento(int identrenamiento, int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+            Equipo equipo = this.repo.GetEquipo(idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -69,7 +65,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                await this.repoEnt.BorrarEntrenamiento(identrenamiento);
+                await this.repo.BorrarEntrenamiento(identrenamiento);
                 return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
             }
 
@@ -79,29 +75,29 @@ namespace F2GTraining.Controllers
         public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
-            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+            Equipo equipo = this.repo.GetEquipo(idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            Entrenamiento entrena = this.repoEnt.GetEntrenamiento(identrenamiento);
+            Entrenamiento entrena = this.repo.GetEntrenamiento(identrenamiento);
             List<Jugador> jugadoresequipo;
 
             if (entrena.Activo == false && entrena.FechaFin == null)
             {
-                jugadoresequipo = this.repoJug.GetJugadoresEquipo(idequipo);
+                jugadoresequipo = this.repo.GetJugadoresEquipo(idequipo);
             }
             else if (entrena.Activo == false && entrena.FechaFin != null)
             {
-                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
-                List<JugadorEntrenamiento> notas = this.repoJug.GetNotasSesion(identrenamiento);
+                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
+                List<JugadorEntrenamiento> notas = this.repo.GetNotasSesion(identrenamiento);
                 ViewData["NOTAS"] = notas;
             }
             else
             {
-                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
             }
             
             ViewData["JUGADORES"] = jugadoresequipo;
@@ -116,34 +112,34 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> VistaEntrenamiento(int identrenamiento, int idequipo, List<int> seleccionados, List<int> valoraciones)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
-            Equipo equipo = this.repoEqu.GetEquipo(idequipo);
+            Equipo equipo = this.repo.GetEquipo(idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            Entrenamiento entrena = this.repoEnt.GetEntrenamiento(identrenamiento);
+            Entrenamiento entrena = this.repo.GetEntrenamiento(identrenamiento);
             List<Jugador> jugadoresequipo;
 
             if (entrena.Activo == false)
             {
                 //AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
-                await this.repoJug.AniadirJugadoresSesion(seleccionados, identrenamiento);
+                await this.repo.AniadirJugadoresSesion(seleccionados, identrenamiento);
                 //AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
-                await this.repoEnt.EmpezarEntrenamiento(identrenamiento);
+                await this.repo.EmpezarEntrenamiento(identrenamiento);
 
-                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
             }
             else 
             {
-                jugadoresequipo = this.repoJug.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
                 //AQUI HAY QUE HACER PROCEDURE PARA ASIGNAR NOTAS A CADA JUGADOR APUNTADO
-                await this.repoJug.AniadirPuntuacionesEntrenamiento(seleccionados, valoraciones, identrenamiento);
+                await this.repo.AniadirPuntuacionesEntrenamiento(seleccionados, valoraciones, identrenamiento);
                 //AQUI VA EL CODIGO PARA QUE LA SESION SE ACABE
-                await this.repoEnt.FinalizarEntrenamiento(identrenamiento);
+                await this.repo.FinalizarEntrenamiento(identrenamiento);
 
-                List<JugadorEntrenamiento> notas = this.repoJug.GetNotasSesion(identrenamiento);
+                List<JugadorEntrenamiento> notas = this.repo.GetNotasSesion(identrenamiento);
                 ViewData["NOTAS"] = notas;
             }
 

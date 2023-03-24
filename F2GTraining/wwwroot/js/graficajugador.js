@@ -67,3 +67,7 @@ function cargaGrafica(etiquetas, valores) {
     $("text.highcharts-credits").hide();
 }
 
+function descargaInforme(idjugador) {
+    window.location.href = "/Jugadores/GraficaComoPDF?idjugador=" + idjugador
+}
+

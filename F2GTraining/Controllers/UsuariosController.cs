@@ -11,9 +11,9 @@ namespace F2GTraining.Controllers
 {
     public class UsuariosController : Controller
     {
-        private RepositoryUsuarios repo;
+        private IRepositoryF2GTraining repo;
 
-        public UsuariosController(RepositoryUsuarios repo)
+        public UsuariosController(IRepositoryF2GTraining repo)
         {
             this.repo = repo;
         }

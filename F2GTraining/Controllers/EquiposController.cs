@@ -9,14 +9,12 @@ namespace F2GTraining.Controllers
 {
     public class EquiposController : Controller
     {
-        private RepositoryEquipos repoEqu;
-        private RepositoryJugadores repoJug;
+        private IRepositoryF2GTraining repo;
         private HelperSubirFicheros helperArchivos;
 
-        public EquiposController(RepositoryEquipos repo, RepositoryJugadores repo2, HelperSubirFicheros helperPath)
+        public EquiposController(IRepositoryF2GTraining repo, HelperSubirFicheros helperPath)
         {
-            this.repoEqu = repo;
-            this.repoJug = repo2;
+            this.repo = repo;
             this.helperArchivos = helperPath;
         }
 
@@ -25,7 +23,7 @@ namespace F2GTraining.Controllers
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
 
-            List<Equipo> equipos = this.repoEqu.GetEquiposUser(idusuario);
+            List<Equipo> equipos = this.repo.GetEquiposUser(idusuario);
 
             if (equipos.Count == 0)
             {
@@ -33,7 +31,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                ViewData["JUGADORESUSUARIO"] = this.repoJug.JugadoresXUsuario(idusuario);
+                ViewData["JUGADORESUSUARIO"] = this.repo.JugadoresXUsuario(idusuario);
                 return View(equipos);
             }
 
@@ -42,7 +40,7 @@ namespace F2GTraining.Controllers
         [AuthorizeUsers]
         public IActionResult _PartialVistaEquipo(int idequipo)
         {
-            return PartialView(this.repoEqu.GetEquipo(idequipo));
+            return PartialView(this.repo.GetEquipo(idequipo));
         }
 
         [AuthorizeUsers]
@@ -62,7 +60,7 @@ namespace F2GTraining.Controllers
             if (extension == ".png")
             {
                 string path = await this.helperArchivos.UploadFileAsync(imagen, nombre.ToLower());
-                await this.repoEqu.InsertEquipo(idusuario, nombre, path);
+                await this.repo.InsertEquipo(idusuario, nombre, path);
                 return RedirectToAction("MenuEquipo","Equipos");
             }
             else

@@ -14,14 +14,11 @@ builder.Services.AddSession(options =>
 });
 
 //BASE DE DATOS
-string connectionString = builder.Configuration.GetConnectionString("databaseF2GClase");
+string connectionString = builder.Configuration.GetConnectionString("databaseAzure");
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<HelperRutasProvider>();
 builder.Services.AddSingleton<HelperSubirFicheros>();
-builder.Services.AddTransient<RepositoryUsuarios>();
-builder.Services.AddTransient<RepositoryJugadores>();
-builder.Services.AddTransient<RepositoryEquipos>();
-builder.Services.AddTransient<RepositoryEntrenamientos>();
+builder.Services.AddTransient<IRepositoryF2GTraining, RepositoryF2GTraining>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 
 //SEGURIDAD
@@ -58,4 +55,5 @@ app.UseMvc(routes =>
     );
 });
 
+Rotativa.AspNetCore.RotativaConfiguration.Setup(builder.Environment.WebRootPath, "Rotativa");
 app.Run();
